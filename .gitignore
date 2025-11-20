@@ -1,0 +1,51 @@
+# Feast registry database
+data/registry.db
+*.db
+
+# Data files (CSV, Parquet) - these are large and should not be versioned
+data/*.csv
+data/*.parquet
+*.csv
+*.parquet
+
+# Virtual environment
+feast_env/
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.py[cod]
+*$py.class
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+logs/
+*.log
+
+# Environment and config files with sensitive data
+feature_store.yaml
+.env
+.env.local
+*.key
+*.pem
+
+# Temporary test files (uncomment if needed)
+# test.py
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+

@@ -1,0 +1,18 @@
+project: instawork_feature_store
+registry: data/registry.db
+provider: aws
+entity_key_serialization_version: 3
+
+online_store:
+  type: redis
+  connection_string: "localhost:6379"
+
+offline_store:
+  type: redshift
+  cluster_id: YOUR_CLUSTER_ID
+  region: us-west-2
+  database: instawork
+  user: YOUR_USERNAME
+  s3_staging_location: s3://YOUR_BUCKET/feast-staging
+  iam_role: arn:aws:iam::ACCOUNT_ID:role/YOUR_ROLE
+
