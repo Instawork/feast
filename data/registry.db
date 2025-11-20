@@ -1,66 +1,760 @@
 
-q
-Q
-id_shift_idInstawork Shift identifier"id_shift_idJinstawork_feature_store
-îÉıÈà®›’îÉıÈà®›’
-z
-Z
-id_business_idInstawork Business identifier"id_business_idJinstawork_feature_store
-îÉıÈ€Å’îÉıÈ€Å’
-z
-Z
-id_worker_id!Instawork Professional identifier"id_worker_idJinstawork_feature_store
-îÉıÈà–£’îÉıÈà–£’
+]
+=
+shiftShift entity"id_shift_idJinstawork_feature_store
+×«şÈ¨Äı“¸¬şÈ˜ÛÁ€
+`
+@
+workerWorker entity"id_worker_idJinstawork_feature_store
+×«şÈˆş‰”¸¬şÈğùÉ€
+f
+F
+businessBusiness entity"id_business_idJinstawork_feature_store
+×«şÈÀ¡†”¸¬şÈğğÌ€
 N
 .
 __dummy"
 __dummy_idJinstawork_feature_store
-îÉıÈÀı ’îÉıÈĞ¿¥’1"$6d333c5f-6635-4c47-825a-fb900fbc9937*¼ÊıÈÈÁ—£2ˆ
-
-ç	
-shift_core_featuresinstawork_feature_storeid_shift_id"
-id_shift_group_id"
-id_worker_id"
-id_business_id"
-id_company_id"
-id_position_id"
-id_regionmapping_id"
-ts_shift_created_at"
-ts_shift_starts_at"
-ts_shift_ends_at"
-ts_shift_group_created_at"
-b_w2_employees_only"
-b_is_filled"
-b_worker_no_show"
-b_has_rating_by_worker"
-b_has_rating_by_business"
-b_is_weekend"
-b_is_daytime"
-b_is_bad_quality_outcome"
-b_b_is_partial"
-rv_float_rating_by_worker"
-rv_float_rating_by_business"
-rv_float_business_rate_usd"
-rv_float_applicant_rate_usd"!
-rv_int_created_to_start_hours"'
-#rv_int_group_created_to_start_hours"
-rv_int_shift_duration_hours"
-rv_int_day_of_week"
-rv_int_hour_of_day"
-rv_int_user_shift_sequence"'
-#rv_int_user_business_shift_sequence"'
-#rv_int_user_position_shift_sequence"%
-!rv_int_hours_since_previous_shift"
-rv_int_hours_to_next_shift"
-mc_str_shift_style*
-owner	data_team*
-categorycore*
-domainshift2€ÎÚ:¸ts_dsz5
-shift_core_features_inference	dbt-cchia"	instaworkŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_core_features_source’éÉıÈ¸Á½á"îÉıÈøç²‘b
-id_shift_id
-îÉıÈ°´Ë‘îÉıÈ°´Ë‘2
-×
-pro_education_featuresinstawork_feature_storeid_worker_id"
+×«şÈ ‚”¸¬şÈ ØÏ€1"$de1433a6-6dbb-473a-8b7c-34cfd1c2519d*¸¬şÈĞ‰‚2¾
+
+pro_resume_featuresinstawork_feature_storeworker"
+rv_int_resume_text_len"-
+)rv_float_resume_professionalism_ai_rating"
+mc_str_rating_type"
+b_has_resume_text"
+b_has_substantial_resume"
+b_has_detailed_resume"
+ts_resume_created_at"
+ts_resume_updated_at"
+ts_ai_evaluation_created_at"$
+ rv_int_days_since_resume_created"$
+ rv_int_days_since_resume_updated"#
+rv_int_days_since_ai_evaluation"
+b_resume_updated_recently"
+b_resume_updated_l90d"
+b_ai_evaluation_recent*
+sourceredshift*&
+tablepro_resume_features_inference*
+entityworker2€ç„:¬ts_dsz*
+pro_resume_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_resume_features_source’¾«şÈ¸üö"×«şÈÈõ€‘@b
+id_worker_id
+×«şÈˆò–‘×«şÈˆò–‘2š
+ù
+business_featuresinstawork_feature_storebusiness"
+id_company_id"
+mc_int_business_region"
+mc_str_business_region_name"
+mc_str_business_name" 
+mc_str_business_display_name"
+mc_str_business_type"
+rv_int_total_shifts"
+rv_int_total_filled_shifts"!
+rv_int_total_completed_shifts"
+rv_float_fill_rate"*
+&rv_float_avg_business_rating_by_worker"*
+&rv_float_avg_worker_rating_by_business"
+mc_str_partner_status"
+mc_str_partner_period"
+mc_str_partner_type"
+mc_str_primary_industry"
+mc_str_secondary_industry"
+rv_int_unique_workers"
+rv_int_total_unique_workers"
+ts_first_shift_date"
+ts_last_shift_date"!
+rv_int_days_since_first_shift" 
+rv_int_days_since_last_shift"
+rv_int_shifts_l90d"
+rv_int_w2_employees_only"#
+rv_int_total_ratings_by_workers"$
+ rv_int_total_ratings_by_business"+
+'rv_float_avg_filled_shift_business_rate"-
+)rv_float_avg_unfilled_shift_business_rate",
+(rv_float_avg_filled_shift_applicant_rate".
+*rv_float_avg_unfilled_shift_applicant_rate"
+rv_int_num_gigs"
+rv_int_num_gigs_posted"
+rv_int_num_gigs_filled"
+rv_float_gig_fill_rate"
+rv_int_unique_companies"
+rv_int_unique_shift_days",
+(rv_int_business_cumulative_filled_shifts"
+mc_str_business_timezone"
+rv_int_daily_shifts"
+rv_int_days_since_last_ud"
+ts_gig_date""
+rv_int_cancelled_filled_shifts"!
+rv_int_total_cancelled_shifts"
+rv_int_n_booked_shifts"
+rv_int_n_completed_shifts"
+rv_int_active_pros"
+rv_int_deactivated_pros"
+rv_int_inferred_active_pros"
+rv_int_rejected_pros"
+rv_int_removed_pros*
+sourceredshift*$
+tablebusiness_features_inference*
+entitybusiness2€ç„:§ts_dsz(
+business_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢business_features_source’
+¾«şÈø¢"×«şÈ°‰ı@b
+id_business_id
+×«şÈ¨ç¤‘×«şÈ¨ç¤‘2å
+Ä
+pro_quiz_featuresinstawork_feature_storeworker"
+rv_int_num_quiz_attempted"
+rv_int_num_quiz_passed" 
+rv_int_total_correct_answers"$
+ rv_int_total_questions_attempted"
+rv_int_quiz_attempt_days"
+rv_int_quiz_attempts_l30d"
+rv_int_quiz_attempts_l90d""
+rv_int_num_unique_quiz_configs" 
+rv_float_avg_pass_quiz_score"&
+"rv_int_offshift_num_quiz_attempted"#
+rv_int_offshift_num_quiz_passed"$
+ rv_float_offshift_avg_quiz_score")
+%rv_int_offshift_total_correct_answers"-
+)rv_int_offshift_total_questions_attempted"'
+#rv_float_offshift_avg_quiz_accuracy"
+rv_float_avg_quiz_accuracy"
+rv_float_avg_quiz_score"
+rv_float_min_quiz_score"
+rv_float_max_quiz_score"
+rv_float_quiz_score_stddev"
+rv_float_quiz_pass_rate"#
+rv_float_barback_overview_score"!
+rv_float_cocktail_tools_score" 
+rv_float_coffee_drinks_score"
+rv_float_dish_prep_score"
+rv_float_food_safety_score"
+rv_float_glassware_score"
+rv_float_housekeeper_score"$
+ rv_float_serving_technique_score"!
+rv_float_line_cook_quiz_score"(
+$rv_float_quiz_barback_overview_score"
+ts_earliest_quiz_attempt"
+ts_latest_quiz_attempt")
+%rv_int_num_days_from_earliest_attempt"'
+#rv_int_num_days_from_latest_attempt" 
+rv_int_days_since_first_quiz"
+rv_int_days_since_last_quiz"
+b_has_taken_quiz"
+b_has_passed_quiz"
+b_high_quiz_performer"
+b_consistent_quiz_performer"
+b_recent_quiz_activity*
+sourceredshift*$
+tablepro_quiz_features_inference*
+entityworker2€ç„:¨ts_dsz(
+pro_quiz_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_quiz_features_source’¾«şÈ€½°"×«şÈèèå@b
+id_worker_id
+×«şÈØ§´‘×«şÈØ§´‘2‚
+á
+pro_hypertrack_featuresinstawork_feature_storeworker"#
+rv_int_cumulative_filled_shifts"-
+)rv_float_cumulative_avg_pro_tracking_rate"-
+)rv_float_cumulative_avg_pro_in_fence_rate*
+sourceredshift**
+table!pro_hypertrack_features_inference*
+entityworker2€ç„:´ts_dsz.
+!pro_hypertrack_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_hypertrack_features_source’¾«şÈˆ€"×«şÈ˜ù„‘@b
+id_worker_id
+×«şÈ€¾Ä‘×«şÈ€¾Ä‘2•*
+ô)
+pro_experience_featuresinstawork_feature_storeworker"!
+rv_int_forklift_driver_tenure"
+rv_int_cashier_tenure"%
+!rv_int_warehouse_associate_tenure"
+rv_int_server_tenure"
+rv_int_busser_tenure"
+rv_int_line_cook_tenure"
+rv_int_prep_cook_tenure"
+rv_int_housekeeper_tenure"
+rv_int_general_labor_tenure"
+rv_int_driver_tenure"
+rv_int_porter_tenure"
+rv_int_fast_food_tenure"$
+ rv_int_delivery_companies_tenure"
+rv_int_retail_tenure""
+rv_int_customer_service_tenure"
+rv_int_warehouse_tenure"!
+rv_int_staffing_agency_tenure"
+rv_int_food_services_tenure"
+rv_int_restaurant_tenure"
+rv_int_cafe_tenure"
+rv_int_military_tenure"
+rv_int_mcdonalds_tenure"
+rv_int_walmart_tenure"
+rv_int_uber_tenure"
+rv_int_amazon_tenure"
+rv_int_home_depot_tenure"
+rv_int_whole_foods_tenure"
+rv_int_people_ready_tenure"
+rv_int_ups_tenure"
+rv_int_popeyes_tenure"
+rv_int_target_tenure"
+rv_int_taco_bell_tenure"
+rv_int_fedex_ground_tenure"
+rv_int_chipotle_tenure"
+rv_int_starbucks_tenure"
+rv_int_applebees_tenure"
+rv_int_burger_king_tenure"
+rv_int_subway_tenure"
+rv_int_wendys_tenure"
+rv_int_doordash_tenure"
+rv_int_chick_fil_a_tenure"
+rv_int_pizza_hut_tenure"
+rv_int_ihop_tenure"
+rv_int_panera_bread_tenure"
+rv_int_olive_garden_tenure"$
+ rv_int_buffalo_wild_wings_tenure"
+rv_int_instacart_tenure"
+rv_int_dominos_tenure"
+rv_int_chilis_tenure"
+rv_int_sonic_tenure"
+rv_int_waffle_house_tenure"
+rv_int_red_lobster_tenure"
+rv_int_dennys_tenure"
+rv_int_kfc_tenure"(
+$rv_int_the_cheesecake_factory_tenure"!
+rv_int_jack_in_the_box_tenure"
+rv_int_dollar_tree_tenure"&
+"rv_int_little_caesars_pizza_tenure"
+rv_int_walgreens_tenure"
+rv_int_whataburger_tenure"
+rv_int_aramark_tenure"
+rv_int_macys_tenure"
+rv_int_family_dollar_tenure""
+rv_int_allied_universal_tenure"
+rv_int_self_employed_tenure"(
+$rv_int_lowes_home_improvement_tenure"$
+ rv_int_outback_steakhouse_tenure"
+rv_int_seven_eleven_tenure"
+rv_int_kroger_tenure"
+rv_int_tgi_fridays_tenure".
+*rv_int_united_states_postal_service_tenure"
+rv_int_five_guys_tenure"%
+!rv_int_ross_dress_for_less_tenure" 
+rv_int_dollar_general_tenure""
+rv_int_papa_johns_pizza_tenure"
+rv_int_dunkin_donuts_tenure"
+rv_int_safeway_tenure"
+rv_int_wingstop_tenure" 
+rv_int_cracker_barrel_tenure"
+rv_int_shake_shack_tenure"
+rv_int_sodexo_tenure""
+rv_int_costco_wholesale_tenure""
+rv_int_levy_restaurants_tenure"
+rv_int_postmates_tenure"!
+rv_int_texas_roadhouse_tenure"
+rv_int_red_robin_tenure"
+rv_int_jimmy_johns_tenure"
+rv_int_us_army_tenure"
+rv_int_wonolo_tenure"
+rv_int_bjs_tenure"
+rv_int_circle_k_tenure"
+rv_int_burlington_tenure"
+rv_int_steak_n_shake_tenure"
+rv_int_raising_canes_tenure"
+rv_int_panda_express_tenure"
+rv_int_kohls_tenure"
+rv_int_best_buy_tenure" 
+rv_int_chuck_e_cheese_tenure"6
+2rv_int_zaxbys_chicken_fingers_buffalo_wings_tenure"
+rv_int_nordstrom_tenure"
+rv_int_cvs_tenure"
+rv_int_arbys_tenure"!
+rv_int_lgc_hospitality_tenure"!
+rv_int_in_n_out_burger_tenure"
+rv_int_sams_club_tenure""
+rv_int_dave_and_busters_tenure"
+rv_int_forever_21_tenure"
+rv_int_pf_changs_tenure"
+rv_int_ruby_tuesday_tenure"
+rv_int_jcpenney_tenure"#
+rv_int_jersey_mikes_subs_tenure"
+rv_int_hooters_tenure"
+rv_int_golden_corral_tenure"
+rv_int_autozone_tenure"
+rv_int_topgolf_tenure"
+rv_int_hellofresh_tenure"
+rv_int_marshalls_tenure"
+rv_int_old_navy_tenure"2
+.rv_int_express_employment_professionals_tenure"
+rv_int_tesla_tenure"
+rv_int_securitas_tenure"
+rv_int_us_navy_tenure"
+rv_int_tj_maxx_tenure"
+rv_int_white_castle_tenure"
+rv_int_dairy_queen_tenure"%
+!rv_int_longhorn_steakhouse_tenure"
+rv_int_boston_market_tenure"
+rv_int_lyft_tenure"
+rv_int_del_taco_tenure"
+rv_int_wawa_tenure"
+rv_int_bluecrew_tenure"
+rv_int_heb_tenure"
+rv_int_checkers_tenure"
+rv_int_qwick_tenure"
+rv_int_compass_group_tenure"*
+&rv_int_cheddars_scratch_kitchen_tenure"#
+rv_int_round_table_pizza_tenure"
+rv_int_goodwill_tenure"
+rv_int_sofi_stadium_tenure",
+(rv_int_pappadeaux_seafood_kitchen_tenure"(
+$rv_int_sprouts_farmers_market_tenure"%
+!rv_int_bath_and_body_works_tenure"#
+rv_int_generic_warehouse_tenure"
+rv_int_albertsons_tenure"
+rv_int_sweetgreen_tenure"%
+!rv_int_bed_bath_and_beyond_tenure"
+rv_int_ihss_tenure"
+rv_int_carls_jr_tenure"
+rv_int_quicktrip_tenure"
+rv_int_foot_locker_tenure"
+rv_int_jewel_osco_tenure"
+rv_int_party_city_tenure"
+rv_int_trader_joes_tenure""
+rv_int_num_unique_current_exps"
+rv_int_num_unique_past_exps"*
+&rv_int_num_unique_staffing_agency_exps".
+*rv_int_num_unique_non_staffing_agency_exps"
+rv_int_current_exp_months"
+rv_int_past_exp_months"
+rv_int_staffing_agency_exp""
+rv_int_non_staffing_agency_exp*
+sourceredshift**
+table!pro_experience_features_inference*
+entityworker2€ç„:´ts_dsz.
+!pro_experience_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_experience_features_source’¾«şÈà¨ß"×«şÈèä‘@b
+id_worker_id
+×«şÈè¶É‘×«şÈè¶É‘2¨
+‡
+pro_attire_featuresinstawork_feature_storeworker""
+b_accepted_black_bistro_attire"#
+b_accepted_black_clothes_attire"%
+!b_accepted_business_casual_attire""
+b_accepted_chef_uniform_attire"#
+b_accepted_kitchen_black_attire"&
+"b_accepted_warehouse_safety_attire""
+b_accepted_white_bistro_attire"*
+&rv_int_offshift_num_attire_submissions"(
+$rv_int_offshift_num_uploaded_attires"(
+$rv_int_offshift_num_accepted_attires"(
+$rv_int_offshift_num_rejected_attires"0
+,rv_int_offshift_num_attire_score_great_photo")
+%rv_int_offshift_num_attire_score_pass"5
+1rv_int_offshift_num_attire_score_bad_faith_upload"3
+/rv_int_offshift_num_attire_score_earnest_effort"9
+5rv_int_offshift_num_front_of_house_attire_submissions"8
+4rv_int_offshift_num_back_of_house_attire_submissions"2
+.rv_int_offshift_num_generic_attire_submissions""
+rv_int_num_unique_attire_types"*
+&rv_int_first_submission_accepted_count"*
+&rv_int_first_submission_rejected_count")
+%rv_int_first_submission_pending_count"(
+$rv_int_current_accepted_attire_types"(
+$rv_int_current_rejected_attire_types"'
+#rv_int_current_pending_attire_types"*
+&rv_int_n_earnest_effort_attire_uploads"'
+#rv_int_n_great_photo_attire_uploads" 
+rv_int_n_pass_attire_uploads",
+(rv_int_n_bad_faith_upload_attire_uploads"!
+rv_int_pos_attire_cat_ratings"!
+rv_int_neg_attire_cat_ratings"#
+rv_float_attire_acceptance_rate""
+rv_float_attire_rejection_rate" 
+rv_float_attire_pending_rate"
+b_has_accepted_attire"
+b_has_rejected_attire"
+b_has_pending_attire"
+b_has_attire_submissions"!
+b_has_accepted_attire_history"!
+b_has_rejected_attire_history" 
+b_has_pending_attire_history""
+b_has_positive_attire_feedback""
+b_has_negative_attire_feedback*
+sourceredshift*&
+tablepro_attire_features_inference*
+entityworker2€ç„:¬ts_dsz*
+pro_attire_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_attire_features_source’¾«şÈ é"×«şÈğâô@b
+id_worker_id
+×«şÈ°°í‘×«şÈ°°í‘2‹
+ê
+pro_company_featuresinstawork_feature_storeworker"
+rv_int_n_companies*
+sourceredshift*'
+tablepro_company_features_inference*
+entityworker2€ç„:®ts_dsz+
+pro_company_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_company_features_source’¾«şÈ€¹ç"×«şÈ°Èè@b
+id_worker_id
+×«şÈğÄû‘×«şÈğÄû‘2‰
+è
+pro_ticket_featuresinstawork_feature_storeworker"
+rv_int_n_pro_tickets*
+sourceredshift*&
+tablepro_ticket_features_inference*
+entityworker2€ç„:¬ts_dsz*
+pro_ticket_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_ticket_features_source’¾«şÈ°…ä"×«şÈ¨ôö@b
+id_worker_id
+×«şÈ°÷ÿ‘×«şÈ°÷ÿ‘2
+ì
+pro_referral_featuresinstawork_feature_storeworker"
+rv_int_num_references"'
+#rv_float_avg_reference_completeness""
+rv_int_num_complete_references"&
+"rv_int_num_high_quality_references"$
+ rv_int_num_references_with_email"$
+ rv_int_num_references_with_phone"
+ts_earliest_reference_date"
+ts_latest_reference_date"%
+!rv_int_days_since_first_reference"$
+ rv_int_days_since_last_reference" 
+rv_int_references_added_l30d" 
+rv_int_references_added_l90d"
+b_has_references""
+b_has_strong_reference_network"!
+b_has_high_quality_references"
+b_recent_reference_activity"
+b_is_reference_signup"
+mc_str_acquisition_type"#
+rv_float_referrer_quality_score" 
+rv_float_referrer_avg_rating"#
+rv_int_referrer_n_filled_shifts"%
+!rv_int_referrers_time_tenure_days"-
+)rv_int_referrer_referrees_n_filled_shifts"*
+&rv_float_referrer_referrees_avg_rating"0
+,rv_int_referrer_referrees_n_pos_rated_shifts"0
+,rv_int_referrer_referrees_n_neg_rated_shifts"*
+&rv_float_referrer_avg_rating_duplicate"4
+0rv_float_referrer_referrees_avg_rating_duplicate"(
+$rv_float_reference_completeness_rate"(
+$rv_float_high_quality_reference_rate"+
+'rv_float_overall_referral_network_score*
+sourceredshift*(
+tablepro_referral_features_inference*
+entityworker2€ç„:°ts_dsz,
+pro_referral_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_referral_features_source’¾«şÈ°²Ø"×«şÈàç‚‘@b
+id_worker_id
+×«şÈ š„’×«şÈ š„’2Æ
+¥
+business_no_show_featuresinstawork_feature_storebusiness"#
+rv_int_cumulative_auto_no_shows",
+(rv_int_business_cumulative_filled_shifts"-
+)rv_int_cumulative_corrected_auto_no_shows"/
++rv_int_cumulative_corrected_manual_no_shows"%
+!rv_int_cumulative_manual_no_shows"
+rv_float_correction_rate" 
+rv_float_manual_no_show_rate"
+rv_float_auto_no_show_rate*
+sourceredshift*,
+table#business_no_show_features_inference*
+entitybusiness2€ç„:·ts_dsz0
+#business_no_show_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢ business_no_show_features_source’
+¾«şÈĞ„W"×«şÈ°Úâ@b
+id_business_id
+×«şÈÀ›’×«şÈÀ›’2‡
+æ
+pro_shift_outcome_featuresinstawork_feature_storeworker"
+rv_int_n_filled_shifts"
+rv_int_n_non_urgent_defect"&
+"rv_int_n_urgent_defect_auto_cancel"
+rv_int_n_urgent_defect"
+rv_int_n_business_cancelled" 
+rv_int_n_other_urgent_defect"
+rv_int_n_assigned_shifts"
+rv_int_n_filled_barback"
+rv_int_n_filled_bartender"$
+ rv_int_n_filled_brand_ambassador"
+rv_int_n_filled_busser",
+(rv_int_n_filled_concession__stand_worker"*
+&rv_int_n_filled_counter_staff__cashier"
+rv_int_n_filled_custodial"
+rv_int_n_filled_dishwasher" 
+rv_int_n_filled_event_server",
+(rv_int_n_filled_event_setup_and_takedown"'
+#rv_int_n_filled_food_service_worker"#
+rv_int_n_filled_forklift_driver"!
+rv_int_n_filled_general_labor"
+rv_int_n_filled_housekeeper"*
+&rv_int_n_filled_housekeeping_assistant"
+rv_int_n_filled_line_cook" 
+rv_int_n_filled_merchandiser""
+rv_int_n_filled_onsite_captain"
+rv_int_n_filled_prep_cook"
+rv_int_n_filled_runner"
+rv_int_n_filled_supervisor"$
+ rv_int_n_filled_vip_event_server"#
+rv_int_n_filled_warehouse_admin"3
+/rv_int_n_filled_warehouse_associate_entry_level"4
+0rv_int_n_filled_warehouse_associate_intermediate*
+sourceredshift*-
+table$pro_shift_outcome_features_inference*
+entityworker2€ç„:ºts_dsz1
+$pro_shift_outcome_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢!pro_shift_outcome_features_source’¾«şÈ˜…½"×«şÈÀ¹‡‘@b
+id_worker_id
+×«şÈ¨‘”’×«şÈ¨‘”’2‚
+á
+business_hypertrack_featuresinstawork_feature_storebusiness"
+rv_int_n_business_shifts"'
+#rv_float_avg_business_tracking_rate"'
+#rv_float_avg_business_time_in_fence"%
+!rv_float_avg_business_active_time"(
+$rv_float_avg_business_total_duration"'
+#rv_float_avg_business_in_fence_rate*
+sourceredshift*/
+table&business_hypertrack_features_inference*
+entitybusiness2€ç„:½ts_dsz3
+&business_hypertrack_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢#business_hypertrack_features_source’
+¾«şÈ˜L"×«şÈÈù@b
+id_business_id
+×«şÈˆÑ’×«şÈˆÑ’2ïO
+ÎO
+pro_quality_ratings_featuresinstawork_feature_storeworker"&
+"rv_int_n_negative_attitude_ratings"&
+"rv_int_n_positive_attitude_ratings".
+*rv_int_n_negative_trust_and_safety_ratings".
+*rv_int_n_positive_trust_and_safety_ratings"3
+/rv_int_n_total_positive_partner_captain_ratings"3
+/rv_int_n_total_negative_partner_captain_ratings"
+rv_int_n_total_blocks"*
+&rv_int_n_pos_skill_cat_ratings_barback"*
+&rv_int_n_neg_skill_cat_ratings_barback"+
+'rv_int_n_pos_attire_cat_ratings_barback"+
+'rv_int_n_neg_attire_cat_ratings_barback"5
+1rv_int_n_positive_partner_captain_ratings_barback"5
+1rv_int_n_negative_partner_captain_ratings_barback"#
+rv_int_n_blocked_shifts_barback",
+(rv_int_n_pos_skill_cat_ratings_bartender",
+(rv_int_n_neg_skill_cat_ratings_bartender"-
+)rv_int_n_pos_attire_cat_ratings_bartender"-
+)rv_int_n_neg_attire_cat_ratings_bartender"7
+3rv_int_n_positive_partner_captain_ratings_bartender"7
+3rv_int_n_negative_partner_captain_ratings_bartender"%
+!rv_int_n_blocked_shifts_bartender"3
+/rv_int_n_pos_skill_cat_ratings_brand_ambassador"3
+/rv_int_n_neg_skill_cat_ratings_brand_ambassador"4
+0rv_int_n_pos_attire_cat_ratings_brand_ambassador"4
+0rv_int_n_neg_attire_cat_ratings_brand_ambassador">
+:rv_int_n_positive_partner_captain_ratings_brand_ambassador">
+:rv_int_n_negative_partner_captain_ratings_brand_ambassador",
+(rv_int_n_blocked_shifts_brand_ambassador")
+%rv_int_n_pos_skill_cat_ratings_busser")
+%rv_int_n_neg_skill_cat_ratings_busser"*
+&rv_int_n_pos_attire_cat_ratings_busser"*
+&rv_int_n_neg_attire_cat_ratings_busser"4
+0rv_int_n_positive_partner_captain_ratings_busser"4
+0rv_int_n_negative_partner_captain_ratings_busser""
+rv_int_n_blocked_shifts_busser";
+7rv_int_n_pos_skill_cat_ratings_concession__stand_worker";
+7rv_int_n_neg_skill_cat_ratings_concession__stand_worker"<
+8rv_int_n_pos_attire_cat_ratings_concession__stand_worker"<
+8rv_int_n_neg_attire_cat_ratings_concession__stand_worker"F
+Brv_int_n_positive_partner_captain_ratings_concession__stand_worker"F
+Brv_int_n_negative_partner_captain_ratings_concession__stand_worker"4
+0rv_int_n_blocked_shifts_concession__stand_worker"9
+5rv_int_n_pos_skill_cat_ratings_counter_staff__cashier"9
+5rv_int_n_neg_skill_cat_ratings_counter_staff__cashier":
+6rv_int_n_pos_attire_cat_ratings_counter_staff__cashier":
+6rv_int_n_neg_attire_cat_ratings_counter_staff__cashier"D
+@rv_int_n_positive_partner_captain_ratings_counter_staff__cashier"D
+@rv_int_n_negative_partner_captain_ratings_counter_staff__cashier"2
+.rv_int_n_blocked_shifts_counter_staff__cashier",
+(rv_int_n_pos_skill_cat_ratings_custodial",
+(rv_int_n_neg_skill_cat_ratings_custodial"-
+)rv_int_n_pos_attire_cat_ratings_custodial"-
+)rv_int_n_neg_attire_cat_ratings_custodial"7
+3rv_int_n_positive_partner_captain_ratings_custodial"7
+3rv_int_n_negative_partner_captain_ratings_custodial"%
+!rv_int_n_blocked_shifts_custodial"-
+)rv_int_n_pos_skill_cat_ratings_dishwasher"-
+)rv_int_n_neg_skill_cat_ratings_dishwasher".
+*rv_int_n_pos_attire_cat_ratings_dishwasher".
+*rv_int_n_neg_attire_cat_ratings_dishwasher"8
+4rv_int_n_positive_partner_captain_ratings_dishwasher"8
+4rv_int_n_negative_partner_captain_ratings_dishwasher"&
+"rv_int_n_blocked_shifts_dishwasher"/
++rv_int_n_pos_skill_cat_ratings_event_server"/
++rv_int_n_neg_skill_cat_ratings_event_server"0
+,rv_int_n_pos_attire_cat_ratings_event_server"0
+,rv_int_n_neg_attire_cat_ratings_event_server":
+6rv_int_n_positive_partner_captain_ratings_event_server":
+6rv_int_n_negative_partner_captain_ratings_event_server"(
+$rv_int_n_blocked_shifts_event_server";
+7rv_int_n_pos_skill_cat_ratings_event_setup_and_takedown";
+7rv_int_n_neg_skill_cat_ratings_event_setup_and_takedown"<
+8rv_int_n_pos_attire_cat_ratings_event_setup_and_takedown"<
+8rv_int_n_neg_attire_cat_ratings_event_setup_and_takedown"F
+Brv_int_n_positive_partner_captain_ratings_event_setup_and_takedown"F
+Brv_int_n_negative_partner_captain_ratings_event_setup_and_takedown"4
+0rv_int_n_blocked_shifts_event_setup_and_takedown"6
+2rv_int_n_pos_skill_cat_ratings_food_service_worker"6
+2rv_int_n_neg_skill_cat_ratings_food_service_worker"7
+3rv_int_n_pos_attire_cat_ratings_food_service_worker"7
+3rv_int_n_neg_attire_cat_ratings_food_service_worker"A
+=rv_int_n_positive_partner_captain_ratings_food_service_worker"A
+=rv_int_n_negative_partner_captain_ratings_food_service_worker"/
++rv_int_n_blocked_shifts_food_service_worker"2
+.rv_int_n_pos_skill_cat_ratings_forklift_driver"2
+.rv_int_n_neg_skill_cat_ratings_forklift_driver"3
+/rv_int_n_pos_attire_cat_ratings_forklift_driver"3
+/rv_int_n_neg_attire_cat_ratings_forklift_driver"=
+9rv_int_n_positive_partner_captain_ratings_forklift_driver"=
+9rv_int_n_negative_partner_captain_ratings_forklift_driver"+
+'rv_int_n_blocked_shifts_forklift_driver"0
+,rv_int_n_pos_skill_cat_ratings_general_labor"0
+,rv_int_n_neg_skill_cat_ratings_general_labor"1
+-rv_int_n_pos_attire_cat_ratings_general_labor"1
+-rv_int_n_neg_attire_cat_ratings_general_labor";
+7rv_int_n_positive_partner_captain_ratings_general_labor";
+7rv_int_n_negative_partner_captain_ratings_general_labor")
+%rv_int_n_blocked_shifts_general_labor".
+*rv_int_n_pos_skill_cat_ratings_housekeeper".
+*rv_int_n_neg_skill_cat_ratings_housekeeper"/
++rv_int_n_pos_attire_cat_ratings_housekeeper"/
++rv_int_n_neg_attire_cat_ratings_housekeeper"9
+5rv_int_n_positive_partner_captain_ratings_housekeeper"9
+5rv_int_n_negative_partner_captain_ratings_housekeeper"'
+#rv_int_n_blocked_shifts_housekeeper"9
+5rv_int_n_pos_skill_cat_ratings_housekeeping_assistant"9
+5rv_int_n_neg_skill_cat_ratings_housekeeping_assistant":
+6rv_int_n_pos_attire_cat_ratings_housekeeping_assistant":
+6rv_int_n_neg_attire_cat_ratings_housekeeping_assistant"D
+@rv_int_n_positive_partner_captain_ratings_housekeeping_assistant"D
+@rv_int_n_negative_partner_captain_ratings_housekeeping_assistant"2
+.rv_int_n_blocked_shifts_housekeeping_assistant",
+(rv_int_n_pos_skill_cat_ratings_line_cook",
+(rv_int_n_neg_skill_cat_ratings_line_cook"-
+)rv_int_n_pos_attire_cat_ratings_line_cook"-
+)rv_int_n_neg_attire_cat_ratings_line_cook"7
+3rv_int_n_positive_partner_captain_ratings_line_cook"7
+3rv_int_n_negative_partner_captain_ratings_line_cook"%
+!rv_int_n_blocked_shifts_line_cook"/
++rv_int_n_pos_skill_cat_ratings_merchandiser"/
++rv_int_n_neg_skill_cat_ratings_merchandiser"0
+,rv_int_n_pos_attire_cat_ratings_merchandiser"0
+,rv_int_n_neg_attire_cat_ratings_merchandiser":
+6rv_int_n_positive_partner_captain_ratings_merchandiser":
+6rv_int_n_negative_partner_captain_ratings_merchandiser"(
+$rv_int_n_blocked_shifts_merchandiser"1
+-rv_int_n_pos_skill_cat_ratings_onsite_captain"1
+-rv_int_n_neg_skill_cat_ratings_onsite_captain"2
+.rv_int_n_pos_attire_cat_ratings_onsite_captain"2
+.rv_int_n_neg_attire_cat_ratings_onsite_captain"<
+8rv_int_n_positive_partner_captain_ratings_onsite_captain"<
+8rv_int_n_negative_partner_captain_ratings_onsite_captain"*
+&rv_int_n_blocked_shifts_onsite_captain",
+(rv_int_n_pos_skill_cat_ratings_prep_cook",
+(rv_int_n_neg_skill_cat_ratings_prep_cook"-
+)rv_int_n_pos_attire_cat_ratings_prep_cook"-
+)rv_int_n_neg_attire_cat_ratings_prep_cook"7
+3rv_int_n_positive_partner_captain_ratings_prep_cook"7
+3rv_int_n_negative_partner_captain_ratings_prep_cook"%
+!rv_int_n_blocked_shifts_prep_cook")
+%rv_int_n_pos_skill_cat_ratings_runner")
+%rv_int_n_neg_skill_cat_ratings_runner"*
+&rv_int_n_pos_attire_cat_ratings_runner"*
+&rv_int_n_neg_attire_cat_ratings_runner"4
+0rv_int_n_positive_partner_captain_ratings_runner"4
+0rv_int_n_negative_partner_captain_ratings_runner""
+rv_int_n_blocked_shifts_runner"-
+)rv_int_n_pos_skill_cat_ratings_supervisor"-
+)rv_int_n_neg_skill_cat_ratings_supervisor".
+*rv_int_n_pos_attire_cat_ratings_supervisor".
+*rv_int_n_neg_attire_cat_ratings_supervisor"8
+4rv_int_n_positive_partner_captain_ratings_supervisor"8
+4rv_int_n_negative_partner_captain_ratings_supervisor"&
+"rv_int_n_blocked_shifts_supervisor"3
+/rv_int_n_pos_skill_cat_ratings_vip_event_server"3
+/rv_int_n_neg_skill_cat_ratings_vip_event_server"4
+0rv_int_n_pos_attire_cat_ratings_vip_event_server"4
+0rv_int_n_neg_attire_cat_ratings_vip_event_server">
+:rv_int_n_positive_partner_captain_ratings_vip_event_server">
+:rv_int_n_negative_partner_captain_ratings_vip_event_server",
+(rv_int_n_blocked_shifts_vip_event_server"2
+.rv_int_n_pos_skill_cat_ratings_warehouse_admin"2
+.rv_int_n_neg_skill_cat_ratings_warehouse_admin"3
+/rv_int_n_pos_attire_cat_ratings_warehouse_admin"3
+/rv_int_n_neg_attire_cat_ratings_warehouse_admin"=
+9rv_int_n_positive_partner_captain_ratings_warehouse_admin"=
+9rv_int_n_negative_partner_captain_ratings_warehouse_admin"+
+'rv_int_n_blocked_shifts_warehouse_admin"B
+>rv_int_n_pos_skill_cat_ratings_warehouse_associate_entry_level"B
+>rv_int_n_neg_skill_cat_ratings_warehouse_associate_entry_level"C
+?rv_int_n_pos_attire_cat_ratings_warehouse_associate_entry_level"C
+?rv_int_n_neg_attire_cat_ratings_warehouse_associate_entry_level"M
+Irv_int_n_positive_partner_captain_ratings_warehouse_associate_entry_level"M
+Irv_int_n_negative_partner_captain_ratings_warehouse_associate_entry_level";
+7rv_int_n_blocked_shifts_warehouse_associate_entry_level"C
+?rv_int_n_pos_skill_cat_ratings_warehouse_associate_intermediate"C
+?rv_int_n_neg_skill_cat_ratings_warehouse_associate_intermediate"D
+@rv_int_n_pos_attire_cat_ratings_warehouse_associate_intermediate"D
+@rv_int_n_neg_attire_cat_ratings_warehouse_associate_intermediate"N
+Jrv_int_n_positive_partner_captain_ratings_warehouse_associate_intermediate"N
+Jrv_int_n_negative_partner_captain_ratings_warehouse_associate_intermediate"<
+8rv_int_n_blocked_shifts_warehouse_associate_intermediate*
+sourceredshift*/
+table&pro_quality_ratings_features_inference*
+entityworker2€ç„:¾ts_dsz3
+&pro_quality_ratings_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢#pro_quality_ratings_features_source’¾«şÈ¨ì‘"×«şÈø¬“‘@b
+id_worker_id
+×«şÈèŸ¤’×«şÈèŸ¤’2ı
+Ü
+pro_amplitude_featuresinstawork_feature_storeworker"!
+rv_int_lte_1_day_num_sessions"!
+rv_int_lte_3_day_num_sessions"!
+rv_int_lte_7_day_num_sessions""
+rv_int_lte_30_day_num_sessions"!
+rv_int_gt_30_day_num_sessions"+
+'rv_int_lte_1_day_session_length_seconds"+
+'rv_int_lte_3_day_session_length_seconds"+
+'rv_int_lte_7_day_session_length_seconds",
+(rv_int_lte_30_day_session_length_seconds"+
+'rv_int_gt_30_day_session_length_seconds"$
+ rv_int_lte_1_day_num_event_types"$
+ rv_int_lte_3_day_num_event_types"$
+ rv_int_lte_7_day_num_event_types"%
+!rv_int_lte_30_day_num_event_types"$
+ rv_int_gt_30_day_num_event_types"+
+'rv_int_lte_1_day_num_unique_event_types"+
+'rv_int_lte_3_day_num_unique_event_types"+
+'rv_int_lte_7_day_num_unique_event_types",
+(rv_int_lte_30_day_num_unique_event_types"+
+'rv_int_gt_30_day_num_unique_event_types"(
+$rv_int_lte_1_day_num_unique_event_id"(
+$rv_int_lte_3_day_num_unique_event_id"(
+$rv_int_lte_7_day_num_unique_event_id")
+%rv_int_lte_30_day_num_unique_event_id"(
+$rv_int_gt_30_day_num_unique_event_id" 
+rv_int_total_unique_sessions"'
+#rv_float_avg_session_length_seconds"%
+!rv_int_total_session_time_seconds"
+rv_int_total_events"#
+rv_int_total_unique_event_types"!
+rv_int_total_unique_event_ids"
+ts_first_session_time"
+ts_last_session_time"
+rv_int_session_span_days"
+b_is_active_today"
+b_is_active_l3d"
+b_is_active_l7d"
+b_is_active_l30d"
+b_is_active_older",
+(rv_float_avg_session_length_seconds_calc"
+rv_float_events_per_session"+
+'rv_float_unique_event_types_per_session"'
+#rv_float_event_type_diversity_ratio"
+rv_float_sessions_per_day"#
+rv_float_total_time_per_session*
+sourceredshift*)
+table pro_amplitude_features_inference*
+entityworker2€ç„:±ts_dsz-
+ pro_amplitude_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_amplitude_features_source’
+¾«şÈŸc"×«şÈèê‘@b
+id_worker_id
+×«şÈè’Ò’×«şÈè’Ò’2Ü	
+»	
+pro_education_featuresinstawork_feature_storeworker"
 b_has_degree_associates"
 b_has_degree_bachelors"
 b_has_degree_masters"
@@ -75,10 +769,10 @@ __dummy_idJinstawork_feature_store
 "b_has_offshift_degree_hotel_school"&
 "b_has_offshift_degree_some_college"
 rv_int_education_level""
-rv_int_total_education_entries""
-rv_int_unique_schools_attended" 
-rv_int_unique_degrees_earned")
-%rv_float_avg_education_duration_years"(
+rv_int_total_education_entries""
+rv_int_unique_schools_attended" 
+rv_int_unique_degrees_earned")
+%rv_float_avg_education_duration_years"(
 $rv_int_earliest_education_start_year"$
  rv_int_latest_education_end_year"%
 !rv_int_years_since_last_education"
@@ -86,98 +780,372 @@ $rv_int_earliest_education_start_year"$
 !b_has_relevant_industry_education"
 b_has_higher_education"#
 mc_str_education_level_category*
-owner	data_team*
-category	education*
-domainpro_profile2€ç„:×ts_dszÙÖ
-        SELECT *
-        FROM "dbt-cchia"."pro_education_features_inference"
-        WHERE id_worker_id IN (
-            SELECT DISTINCT id_worker_id
-            FROM "dbt-cchia"."pro_education_features_inference"
-            LIMIT 10
-        )
-        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."pro_education_features_inference")
-    Š9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_source’éÉıÈÀ™„á"îÉıÈ¨Ã¹‘@b
-id_worker_id3
-îÉıÈÀñ‘¸ÊıÈˆ‘÷¹
-²ãø¹À¹‡°ÊıÈ2¿
-†
-business_featuresinstawork_feature_storeid_business_id"
-id_company_id"
-mc_int_business_region"
-mc_str_business_region_name"
-mc_str_business_name" 
-mc_str_business_display_name"
-mc_str_business_type"
-mc_str_business_timezone"
-rv_int_total_shifts"
-rv_int_total_filled_shifts"!
-rv_int_total_completed_shifts"
-rv_float_fill_rate"
-rv_int_shifts_l90d"
-rv_int_daily_shifts""
-rv_int_cancelled_filled_shifts"!
-rv_int_total_cancelled_shifts"
-rv_int_n_booked_shifts"
-rv_int_n_completed_shifts"*
-&rv_float_avg_business_rating_by_worker"*
-&rv_float_avg_worker_rating_by_business"#
-rv_int_total_ratings_by_workers"$
- rv_int_total_ratings_by_business"
-mc_str_partner_status"
-mc_str_partner_period"
-mc_str_partner_type"
-mc_str_primary_industry"
-mc_str_secondary_industry"
-rv_int_unique_workers"
-rv_int_total_unique_workers"
-rv_int_w2_employees_only"
-rv_int_active_pros"
-rv_int_deactivated_pros"
-rv_int_inferred_active_pros"
-rv_int_rejected_pros"
-rv_int_removed_pros"
-ts_first_shift_date"
-ts_last_shift_date"!
-rv_int_days_since_first_shift" 
-rv_int_days_since_last_shift"
-rv_int_days_since_last_ud"
-ts_gig_date"+
+sourceredshift*)
+table pro_education_features_inference*
+entityworker2€ç„:²ts_dsz-
+ pro_education_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_features_source’¾«şÈÀì¾"×«şÈ Ü@b
+id_worker_id
+×«şÈø¹ß’×«şÈø¹ß’2¡
+€
+pro_core_featuresinstawork_feature_storeworker"
+
+b_has_name"
+b_is_email_verified"
+b_is_phonenum_verified"
+b_is_unsubscribe"
+b_has_address"
+b_has_resume"
+b_has_profileimagename"
+b_has_bank_account_number"
+b_has_bank_routing_number"
+b_has_date_of_birth"
+	b_has_ssn"
+b_is_device"
+b_is_partial"
+mc_str_applicant_app_os""
+b_is_unsubscribe_introductions"
+b_is_unsubscribe_looking"
+b_is_reference_signup"
+b_has_carpool_preference"
+b_can_carpool"
+b_has_vehicle_filled"
+b_has_vehicle" 
+b_has_driving_license_filled"
+b_has_driving_license"
+b_is_video_approved"$
+ b_has_followed_region_onboarding"
+b_has_contacts_sync"
+b_created_from_staff_list"
+b_has_limited_gig_access"
+b_w2_eligible""
+mc_int_background_check_status"%
+!mc_int_motor_vehicle_check_status"
+mc_int_w2_status"
+b_has_hypertrack_user_id"
+b_is_pushtoken_active"
+b_has_work_experience"
+mc_str_worker_status"
+mc_str_worker_level"
+ts_worker_level_updated_at"
+rv_int_days_at_worker_level"
+rv_int_count_gold_level"
+rv_int_count_silver_level"
+rv_int_count_bronze_level"
+rv_int_count_platinum_level" 
+ts_latest_date_gold_achieved" 
+ts_oldest_date_gold_achieved""
+ts_latest_date_silver_achieved""
+ts_oldest_date_silver_achieved""
+ts_latest_date_bronze_achieved""
+ts_oldest_date_bronze_achieved"$
+ ts_latest_date_platinum_achieved"$
+ ts_oldest_date_platinum_achieved"
+rv_int_max_level_achieved"
+rv_int_like_count"
+rv_int_noshow_count"
+rv_int_unlike_count" 
+rv_int_days_from_last_active"
+rv_int_days_from_last_login""
+rv_int_days_from_last_modified"
+ts_last_active"
+ts_last_login"
+ts_date_created"
+ts_date_modified"
+b_has_food_handlers_card"
+b_has_drivers_license_cert"
+b_has_alcohol_certificate"
+b_has_other_certification" 
+b_has_forklift_certification"!
+b_has_vaccination_certificate"$
+ b_has_california_rbs_certificate"$
+ mt_offshift_interested_positions"%
+!rv_int_offshift_num_pos_interests"
+mt_interested_positions"
+rv_int_num_pos_interests"!
+rv_int_total_ratings_received"
+rv_int_total_ratings_given"!
+rv_float_avg_rating_by_worker"
+b_active_last_7_days"
+b_active_last_30_days"
+b_logged_in_last_7_days"
+b_logged_in_last_30_days"
+rv_int_account_age_days"
+b_veteran_account"
+b_new_account"
+rv_int_n_favorites"
+rv_int_n_blocks" 
+rv_int_n_company_preferences"
+ts_feats_end_date*
+sourceredshift*$
+tablepro_core_features_inference*
+entityworker2€ç„:¨ts_dsz(
+pro_core_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_core_features_source’¾«şÈÈí"×«şÈ˜Çë@b
+id_worker_id
+×«şÈğôè’×«şÈğôè’2£
+‚
+pro_business_featuresinstawork_feature_storeworker"
+id_business_id"
+id_company_id"
+b_is_favorite_business"
+b_is_blocked_business"#
+rv_int_total_shifts_at_business"$
+ rv_int_filled_shifts_at_business"'
+#rv_int_completed_shifts_at_business" 
+rv_int_bqo_count_at_business" 
+rv_int_f3_shifts_at_business"(
+$rv_int_total_shifts_at_business_l90d"(
+$rv_int_total_shifts_at_business_l30d")
+%rv_int_filled_shifts_at_business_l90d",
+(rv_int_completed_shifts_at_business_l90d"%
+!rv_int_bqo_count_at_business_l90d"%
+!rv_int_f3_shifts_at_business_l90d",
+(rv_float_avg_business_rating_at_business"*
+&rv_float_avg_worker_rating_at_business"1
+-rv_float_avg_business_rating_at_business_l90d"/
++rv_float_avg_worker_rating_at_business_l90d"*
+&rv_float_avg_business_rating_by_worker"*
+&rv_float_avg_worker_rating_by_business"*
+&rv_float_avg_business_rate_at_business"(
+$rv_float_avg_worker_rate_at_business"/
++rv_float_avg_business_rate_at_business_l90d"-
+)rv_float_avg_worker_rate_at_business_l90d"4
+0rv_float_avg_booked_shift_group_size_at_business"4
+0rv_float_avg_filled_shift_group_size_at_business".
+*rv_float_shift_group_fill_rate_at_business",
+(mc_str_relationship_strength_at_business"
+rv_float_assignment_rate"!
+rv_float_bqo_rate_at_business"&
+"rv_float_f3_shift_rate_at_business"!
+rv_float_assignment_rate_l90d"&
+"rv_float_bqo_rate_at_business_l90d"+
+'rv_float_f3_shift_rate_at_business_l90d"*
+&rv_int_unique_shift_groups_at_business"(
+$rv_int_unique_shift_days_at_business"/
++rv_int_unique_shift_groups_at_business_l90d"-
+)rv_int_unique_shift_days_at_business_l90d"$
+ rv_int_total_ratings_by_business"#
+rv_int_total_ratings_by_workers"+
 'rv_float_avg_filled_shift_business_rate"-
 )rv_float_avg_unfilled_shift_business_rate",
-(rv_float_avg_filled_shift_applicant_rate".
-*rv_float_avg_unfilled_shift_applicant_rate"
-rv_int_num_gigs"
-rv_int_num_gigs_posted"
-rv_int_num_gigs_filled"
-rv_float_gig_fill_rate"
-rv_int_unique_companies"
-rv_int_unique_shift_days",
-(rv_int_business_cumulative_filled_shifts*
-owner	data_team*
-domainbusiness_profile2€ç„:Ìts_dszÎË
-        SELECT *
-        FROM "dbt-cchia"."business_features_inference"
-        WHERE id_business_id IN (
-            SELECT DISTINCT id_business_id
-            FROM "dbt-cchia"."business_features_inference"
-            LIMIT 10
-        )
-        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."business_features_inference")
-    Š9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_source’éÉıÈÀ™„á"îÉıÈğá§‘@b
-id_business_id4
-îÉıÈÈò‡’¼ÊıÈ¨Ø…£
-¸ãø¹¨¸º°ÊıÈbÒts_dsz5
-shift_core_features_inference	dbt-cchia"	instaworkŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_core_features_sourceªinstawork_feature_store’éÉıÈ¸Á½á"îÉıÈøç²‘bñts_dszÙÖ
-        SELECT *
-        FROM "dbt-cchia"."pro_education_features_inference"
-        WHERE id_worker_id IN (
-            SELECT DISTINCT id_worker_id
-            FROM "dbt-cchia"."pro_education_features_inference"
-            LIMIT 10
-        )
-        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."pro_education_features_inference")
-    Š9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_sourceªinstawork_feature_store’éÉıÈÀ™„á"îÉıÈ¨Ã¹‘Š9
+(rv_int_business_cumulative_filled_shifts""
+rv_int_cancelled_filled_shifts"
+rv_int_n_booked_shifts"
+rv_int_n_completed_shifts"
+rv_int_pre_booked_shifts"
+ts_first_shift_at_business"
+ts_last_shift_at_business"-
+)rv_int_days_since_first_shift_at_business",
+(rv_int_days_since_last_shift_at_business*
+sourceredshift*(
+tablepro_business_features_inference*
+entityworker2€ç„:°ts_dsz,
+pro_business_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_business_features_source’¾«şÈ€Ì·"×«şÈ°ÙŒ‘@b
+id_worker_id
+×«şÈ®Š“×«şÈ®Š“2
+ı
+pro_time_featuresinstawork_feature_storeworker"
+id_business_id"
+mc_str_business_region"$
+ rv_int_future_worker_assignments"&
+"rv_int_future_worker_unassignments"(
+$rv_int_future_business_cancellations"$
+ rv_int_future_auto_cancellations"&
+"rv_int_future_worker_cancellations"&
+"rv_int_future_excuse_cancellations"
+rv_int_future_shift_leads"1
+-rv_int_future_running_assigneds_with_business"3
+/rv_int_future_running_unassigneds_with_business".
+*rv_int_historical_running_worker_assigneds"0
+,rv_int_historical_running_worker_unassigneds".
+*rv_int_historical_running_business_cancels"&
+"rv_int_historical_running_no_shows"0
+,rv_int_historical_running_no_shows_corrected"*
+&rv_int_historical_running_auto_cancels",
+(rv_int_historical_running_worker_cancels",
+(rv_int_historical_running_excuse_cancels"+
+'rv_int_historical_running_minor_tardies"+
+'rv_int_historical_running_major_tardies")
+%rv_int_historical_running_shift_leads"5
+1rv_int_historical_running_assigneds_with_business"7
+3rv_int_historical_running_unassigneds_with_business".
+*rv_float_historical_assignment_reliability"$
+ rv_float_historical_no_show_rate")
+%rv_float_historical_cancellation_rate"&
+"rv_float_historical_tardiness_rate*
+sourceredshift*$
+tablepro_time_features_inference*
+entityworker2€ç„:¨ts_dsz(
+pro_time_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_time_features_source’¾«şÈÀÄé"×«şÈà ğ@b
+id_worker_id
+×«şÈˆÔš“×«şÈˆÔš“2
+
+í	
+shift_core_featuresinstawork_feature_storeshift"
+id_shift_group_id"
+id_worker_id"
+id_business_id"
+id_company_id"
+id_position_id"
+id_regionmapping_id"
+ts_shift_created_at"
+ts_shift_starts_at"
+ts_shift_ends_at"
+ts_shift_group_created_at"
+b_w2_employees_only"
+b_is_filled"
+b_worker_no_show"
+rv_float_rating_by_worker"
+rv_float_rating_by_business"
+b_has_rating_by_worker"
+b_has_rating_by_business"
+rv_float_business_rate_usd"
+rv_float_applicant_rate_usd"!
+rv_int_created_to_start_hours"'
+#rv_int_group_created_to_start_hours"
+rv_int_shift_duration_hours"
+rv_int_day_of_week"
+rv_int_hour_of_day"
+b_is_weekend"
+b_is_daytime"
+rv_int_user_shift_sequence"'
+#rv_int_user_business_shift_sequence"'
+#rv_int_user_position_shift_sequence"%
+!rv_int_hours_since_previous_shift"
+rv_int_hours_to_next_shift"
+b_is_bad_quality_outcome"
+mc_str_shift_style"
+b_b_is_partial*
+sourceredshift*&
+tableshift_core_features_inference*
+entityshift2€ç„:¬ts_dsz*
+shift_core_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_core_features_source’¾«şÈ¸Ÿ’"×«şÈˆ™Š‘@b
+id_shift_id
+×«şÈ¸¬“×«şÈ¸¬“2Ş
+½
+pro_skill_vector_featuresinstawork_feature_storeworker"
+mt_level_vector_str""
+mt_confidence_level_vector_str"
+mt_source_vector_str*
+sourceredshift*,
+table#pro_skill_vector_features_inference*
+entityworker2€ç„:¸ts_dsz0
+#pro_skill_vector_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢ pro_skill_vector_features_source’¾«şÈØãÜ"×«şÈĞÉò@b
+id_worker_id
+×«şÈØëÁ“×«şÈØëÁ“2é
+È
+shift_benefits_featuresinstawork_feature_storeshift"
+id_business_id"
+id_company_id"
+b_has_free_meals"
+b_has_parking"
+b_is_flexible_time_task*
+sourceredshift**
+table!shift_benefits_features_inference*
+entityshift2€ç„:´ts_dsz.
+!shift_benefits_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_benefits_features_source’¾«şÈè¶…"×«şÈ°ƒÿ@b
+id_shift_id
+×«şÈ°„Ì“×«şÈ°„Ì“2á
+À
+pro_shift_featuresinstawork_feature_storeworker"
+id_shift_id"
+id_shift_group_id"
+id_business_id"
+id_position_id"
+id_company_id"
+b_is_filled"
+b_is_cancelled"
+ts_shift_group_starts_at"
+ts_shift_group_ends_at"
+rv_int_shift_duration_hours"
+rv_float_rating_by_business"
+rv_float_rating_by_worker"
+b_has_business_rating"
+b_has_worker_rating"
+rv_float_business_rate_usd"
+rv_float_worker_rate_usd"
+rv_int_day_of_week"
+rv_int_hour_of_day"
+b_is_weekend"
+b_is_daytime"
+b_has_shift_group"#
+b_has_excellent_business_rating"!
+b_has_excellent_worker_rating"
+b_has_good_business_rating"
+b_has_good_worker_rating"
+b_is_morning_shift"
+b_is_afternoon_shift"
+b_is_evening_night_shift"
+b_is_short_shift"
+b_is_regular_shift"
+b_is_long_shift"
+b_is_shift_lead"1
+-rv_int_days_between_shift_and_worker_assigned"'
+#rv_float_booking_applicant_rate_usd"'
+#rv_float_current_applicant_rate_usd"+
+'rv_float_pro_booking_rate_shift_earning"+
+'rv_float_pro_current_rate_shift_earning""
+b_is_background_check_required"
+b_is_break_paid"
+b_is_free_food_provided"
+b_is_long_term_shift"
+b_is_w2_required"
+b_is_parking_available"
+mc_str_local_day_of_week"
+mc_str_local_start_hour"
+ts_local_starts_at"
+id_original_shift_group_id"
+rv_int_break_length"
+ts_event_created_at"
+ts_event_recorded_at"
+mc_str_event"*
+&rv_float_original_shift_duration_hours"(
+$rv_float_original_total_shift_amount"
+rv_float_shift_booking_fee*
+sourceredshift*%
+tablepro_shift_features_inference*
+entityworker2€ç„:ªts_dsz)
+pro_shift_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_shift_features_source’¾«şÈ Îˆ"×«şÈ˜—û@b
+id_worker_id
+×«şÈøËÖ“×«şÈøËÖ“2
+î
+pro_position_rating_featuresinstawork_feature_storeworker"
+id_position_id"
+mc_str_ai_coach_approval"$
+ mc_str_resume_position_ai_rating""
+b_ai_strong_yes_coach_approval*
+sourceredshift*/
+table&pro_position_rating_features_inference*
+entityworker2€ç„:¾ts_dsz3
+&pro_position_rating_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢#pro_position_rating_features_source’¾«şÈ¨‡‰"×«şÈÀ‡î@b
+id_worker_id
+×«şÈíò“×«şÈíò“bÌts_dsz-
+ pro_education_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_features_sourceªinstawork_feature_store’¾«şÈÀì¾"×«şÈ ÜbÑts_dsz0
+#business_no_show_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢ business_no_show_features_sourceªinstawork_feature_store’
+¾«şÈĞ„W"×«şÈ°ÚâbÂts_dsz(
+pro_quiz_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_quiz_features_sourceªinstawork_feature_store’¾«şÈ€½°"×«şÈèèåbÈts_dsz+
+pro_company_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_company_features_sourceªinstawork_feature_store’¾«şÈ€¹ç"×«şÈ°ÈèbÂts_dsz(
+pro_core_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_core_features_sourceªinstawork_feature_store’¾«şÈÈí"×«şÈ˜ÇëbØts_dsz3
+&pro_position_rating_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢#pro_position_rating_features_sourceªinstawork_feature_store’¾«şÈ¨‡‰"×«şÈÀ‡îbÂts_dsz(
+pro_time_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_time_features_sourceªinstawork_feature_store’¾«şÈÀÄé"×«şÈà ğbÒts_dsz0
+#pro_skill_vector_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢ pro_skill_vector_features_sourceªinstawork_feature_store’¾«şÈØãÜ"×«şÈĞÉòbÆts_dsz*
+pro_attire_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_attire_features_sourceªinstawork_feature_store’¾«şÈ é"×«şÈğâôbÆts_dsz*
+pro_ticket_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_ticket_features_sourceªinstawork_feature_store’¾«şÈ°…ä"×«şÈ¨ôöb×ts_dsz3
+&business_hypertrack_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢#business_hypertrack_features_sourceªinstawork_feature_store’
+¾«şÈ˜L"×«şÈÈùbÄts_dsz)
+pro_shift_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_shift_features_sourceªinstawork_feature_store’¾«şÈ Îˆ"×«şÈ˜—ûbÁts_dsz(
+business_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢business_features_sourceªinstawork_feature_store’
+¾«şÈø¢"×«şÈ°‰ıbÎts_dsz.
+!shift_benefits_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_benefits_features_sourceªinstawork_feature_store’¾«şÈè¶…"×«şÈ°ƒÿbÆts_dsz*
+pro_resume_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_resume_features_sourceªinstawork_feature_store’¾«şÈ¸üö"×«şÈÈõ€‘bÊts_dsz,
+pro_referral_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_referral_features_sourceªinstawork_feature_store’¾«şÈ°²Ø"×«şÈàç‚‘bÎts_dsz.
+!pro_hypertrack_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_hypertrack_features_sourceªinstawork_feature_store’¾«şÈˆ€"×«şÈ˜ù„‘bÔts_dsz1
+$pro_shift_outcome_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢!pro_shift_outcome_features_sourceªinstawork_feature_store’¾«şÈ˜…½"×«şÈÀ¹‡‘bÆts_dsz*
+shift_core_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_core_features_sourceªinstawork_feature_store’¾«şÈ¸Ÿ’"×«şÈˆ™Š‘bÊts_dsz,
+pro_business_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_business_features_sourceªinstawork_feature_store’¾«şÈ€Ì·"×«şÈ°ÙŒ‘bËts_dsz-
+ pro_amplitude_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_amplitude_features_sourceªinstawork_feature_store’
+¾«şÈŸc"×«şÈèê‘bÎts_dsz.
+!pro_experience_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_experience_features_sourceªinstawork_feature_store’¾«şÈà¨ß"×«şÈèä‘bØts_dsz3
+&pro_quality_ratings_features_inference	dbt-cchiaŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢#pro_quality_ratings_features_sourceªinstawork_feature_store’¾«şÈ¨ì‘"×«şÈø¬“‘Š7
 
-instawork_feature_store
-éÉıÈ ŒûáéÉıÈ Œûá
+instawork_feature_store
+¾«şÈÈ«	¬şÈèå

@@ -1,6 +1,6 @@
 """
 Feast Feature Definitions - All Features
-Auto-generated from Redshift metadata on 2025-11-20 14:03:00
+Auto-generated from Redshift metadata on 2025-11-20 14:27:02
 
 This file contains all entity and feature view definitions for the Feast feature store.
 
@@ -8,27 +8,36 @@ Statistics:
 - Tables: 23
 - Total Columns: 959
 - Entities: 3
+- Schema: dbt-cchia
 """
 
-from datetime import timedelta
-
-from feast import Entity, FeatureView, Field, RedshiftSource
+from feast import Entity, FeatureView, Field, RedshiftSource, ValueType
 from feast.types import Float64, Int32, Int64, String, UnixTimestamp
+from datetime import timedelta
 
 # ============================================================================
 # ENTITIES
 # ============================================================================
 
 business_entity = Entity(
-    name="business", join_keys=["id_business_id"], description="Business entity"
+    name="business",
+    join_keys=["id_business_id"],
+    value_type=ValueType.INT32,
+    description="Business entity"
 )
 
 shift_entity = Entity(
-    name="shift", join_keys=["id_shift_id"], description="Shift entity"
+    name="shift",
+    join_keys=["id_shift_id"],
+    value_type=ValueType.INT32,
+    description="Shift entity"
 )
 
 worker_entity = Entity(
-    name="worker", join_keys=["id_worker_id"], description="Worker entity"
+    name="worker",
+    join_keys=["id_worker_id"],
+    value_type=ValueType.INT32,
+    description="Worker entity"
 )
 
 # ============================================================================
@@ -38,7 +47,8 @@ worker_entity = Entity(
 # Business Features
 business_features_source = RedshiftSource(
     name="business_features_source",
-    table="dbt-cchia.business_features_inference",
+    schema="dbt-cchia",
+    table="business_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -103,14 +113,15 @@ business_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "business_features_inference",
-        "entity": "business",
+        "entity": "business"
     },
 )
 
 # Business Hypertrack Features
 business_hypertrack_features_source = RedshiftSource(
     name="business_hypertrack_features_source",
-    table="dbt-cchia.business_hypertrack_features_inference",
+    schema="dbt-cchia",
+    table="business_hypertrack_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -130,14 +141,15 @@ business_hypertrack_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "business_hypertrack_features_inference",
-        "entity": "business",
+        "entity": "business"
     },
 )
 
 # Business No Show Features
 business_no_show_features_source = RedshiftSource(
     name="business_no_show_features_source",
-    table="dbt-cchia.business_no_show_features_inference",
+    schema="dbt-cchia",
+    table="business_no_show_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -159,7 +171,7 @@ business_no_show_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "business_no_show_features_inference",
-        "entity": "business",
+        "entity": "business"
     },
 )
 
@@ -170,7 +182,8 @@ business_no_show_features_fv = FeatureView(
 # Pro Amplitude Features
 pro_amplitude_features_source = RedshiftSource(
     name="pro_amplitude_features_source",
-    table="dbt-cchia.pro_amplitude_features_inference",
+    schema="dbt-cchia",
+    table="pro_amplitude_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -229,14 +242,15 @@ pro_amplitude_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_amplitude_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Attire Features
 pro_attire_features_source = RedshiftSource(
     name="pro_attire_features_source",
-    table="dbt-cchia.pro_attire_features_inference",
+    schema="dbt-cchia",
+    table="pro_attire_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -260,9 +274,7 @@ pro_attire_features_fv = FeatureView(
         Field(name="rv_int_offshift_num_attire_score_pass", dtype=Int64),
         Field(name="rv_int_offshift_num_attire_score_bad_faith_upload", dtype=Int64),
         Field(name="rv_int_offshift_num_attire_score_earnest_effort", dtype=Int64),
-        Field(
-            name="rv_int_offshift_num_front_of_house_attire_submissions", dtype=Int64
-        ),
+        Field(name="rv_int_offshift_num_front_of_house_attire_submissions", dtype=Int64),
         Field(name="rv_int_offshift_num_back_of_house_attire_submissions", dtype=Int64),
         Field(name="rv_int_offshift_num_generic_attire_submissions", dtype=Int64),
         Field(name="rv_int_num_unique_attire_types", dtype=Int64),
@@ -295,14 +307,15 @@ pro_attire_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_attire_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Business Features
 pro_business_features_source = RedshiftSource(
     name="pro_business_features_source",
-    table="dbt-cchia.pro_business_features_inference",
+    schema="dbt-cchia",
+    table="pro_business_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -368,14 +381,15 @@ pro_business_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_business_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Company Features
 pro_company_features_source = RedshiftSource(
     name="pro_company_features_source",
-    table="dbt-cchia.pro_company_features_inference",
+    schema="dbt-cchia",
+    table="pro_company_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -390,14 +404,15 @@ pro_company_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_company_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Core Features
 pro_core_features_source = RedshiftSource(
     name="pro_core_features_source",
-    table="dbt-cchia.pro_core_features_inference",
+    schema="dbt-cchia",
+    table="pro_core_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -498,14 +513,15 @@ pro_core_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_core_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Education Features
 pro_education_features_source = RedshiftSource(
     name="pro_education_features_source",
-    table="dbt-cchia.pro_education_features_inference",
+    schema="dbt-cchia",
+    table="pro_education_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -544,14 +560,15 @@ pro_education_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_education_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Experience Features
 pro_experience_features_source = RedshiftSource(
     name="pro_experience_features_source",
-    table="dbt-cchia.pro_experience_features_inference",
+    schema="dbt-cchia",
+    table="pro_experience_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -726,14 +743,15 @@ pro_experience_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_experience_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Hypertrack Features
 pro_hypertrack_features_source = RedshiftSource(
     name="pro_hypertrack_features_source",
-    table="dbt-cchia.pro_hypertrack_features_inference",
+    schema="dbt-cchia",
+    table="pro_hypertrack_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -750,14 +768,15 @@ pro_hypertrack_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_hypertrack_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Position Rating Features
 pro_position_rating_features_source = RedshiftSource(
     name="pro_position_rating_features_source",
-    table="dbt-cchia.pro_position_rating_features_inference",
+    schema="dbt-cchia",
+    table="pro_position_rating_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -775,14 +794,15 @@ pro_position_rating_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_position_rating_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Quality Ratings Features
 pro_quality_ratings_features_source = RedshiftSource(
     name="pro_quality_ratings_features_source",
-    table="dbt-cchia.pro_quality_ratings_features_inference",
+    schema="dbt-cchia",
+    table="pro_quality_ratings_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -816,14 +836,8 @@ pro_quality_ratings_features_fv = FeatureView(
         Field(name="rv_int_n_neg_skill_cat_ratings_brand_ambassador", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_brand_ambassador", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_brand_ambassador", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_brand_ambassador",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_brand_ambassador",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_brand_ambassador", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_brand_ambassador", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_brand_ambassador", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_busser", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_busser", dtype=Int64),
@@ -832,47 +846,19 @@ pro_quality_ratings_features_fv = FeatureView(
         Field(name="rv_int_n_positive_partner_captain_ratings_busser", dtype=Int64),
         Field(name="rv_int_n_negative_partner_captain_ratings_busser", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_busser", dtype=Int64),
-        Field(
-            name="rv_int_n_pos_skill_cat_ratings_concession__stand_worker", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_skill_cat_ratings_concession__stand_worker", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_pos_attire_cat_ratings_concession__stand_worker", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_attire_cat_ratings_concession__stand_worker", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_concession__stand_worker",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_concession__stand_worker",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_pos_skill_cat_ratings_concession__stand_worker", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_concession__stand_worker", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_concession__stand_worker", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_concession__stand_worker", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_concession__stand_worker", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_concession__stand_worker", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_concession__stand_worker", dtype=Int64),
-        Field(
-            name="rv_int_n_pos_skill_cat_ratings_counter_staff__cashier", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_skill_cat_ratings_counter_staff__cashier", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_pos_attire_cat_ratings_counter_staff__cashier", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_attire_cat_ratings_counter_staff__cashier", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_counter_staff__cashier",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_counter_staff__cashier",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_pos_skill_cat_ratings_counter_staff__cashier", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_counter_staff__cashier", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_counter_staff__cashier", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_counter_staff__cashier", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_counter_staff__cashier", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_counter_staff__cashier", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_counter_staff__cashier", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_custodial", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_custodial", dtype=Int64),
@@ -892,102 +878,50 @@ pro_quality_ratings_features_fv = FeatureView(
         Field(name="rv_int_n_neg_skill_cat_ratings_event_server", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_event_server", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_event_server", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_event_server", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_event_server", dtype=Int64
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_event_server", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_event_server", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_event_server", dtype=Int64),
-        Field(
-            name="rv_int_n_pos_skill_cat_ratings_event_setup_and_takedown", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_skill_cat_ratings_event_setup_and_takedown", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_pos_attire_cat_ratings_event_setup_and_takedown", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_attire_cat_ratings_event_setup_and_takedown", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_event_setup_and_takedown",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_event_setup_and_takedown",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_pos_skill_cat_ratings_event_setup_and_takedown", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_event_setup_and_takedown", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_event_setup_and_takedown", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_event_setup_and_takedown", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_event_setup_and_takedown", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_event_setup_and_takedown", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_event_setup_and_takedown", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_food_service_worker", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_food_service_worker", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_food_service_worker", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_food_service_worker", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_food_service_worker",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_food_service_worker",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_food_service_worker", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_food_service_worker", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_food_service_worker", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_forklift_driver", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_forklift_driver", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_forklift_driver", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_forklift_driver", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_forklift_driver",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_forklift_driver",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_forklift_driver", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_forklift_driver", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_forklift_driver", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_general_labor", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_general_labor", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_general_labor", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_general_labor", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_general_labor", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_general_labor", dtype=Int64
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_general_labor", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_general_labor", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_general_labor", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_housekeeper", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_housekeeper", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_housekeeper", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_housekeeper", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_housekeeper", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_housekeeper", dtype=Int64
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_housekeeper", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_housekeeper", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_housekeeper", dtype=Int64),
-        Field(
-            name="rv_int_n_pos_skill_cat_ratings_housekeeping_assistant", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_skill_cat_ratings_housekeeping_assistant", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_pos_attire_cat_ratings_housekeeping_assistant", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_neg_attire_cat_ratings_housekeeping_assistant", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_housekeeping_assistant",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_housekeeping_assistant",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_pos_skill_cat_ratings_housekeeping_assistant", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_housekeeping_assistant", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_housekeeping_assistant", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_housekeeping_assistant", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_housekeeping_assistant", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_housekeeping_assistant", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_housekeeping_assistant", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_line_cook", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_line_cook", dtype=Int64),
@@ -1000,23 +934,15 @@ pro_quality_ratings_features_fv = FeatureView(
         Field(name="rv_int_n_neg_skill_cat_ratings_merchandiser", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_merchandiser", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_merchandiser", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_merchandiser", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_merchandiser", dtype=Int64
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_merchandiser", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_merchandiser", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_merchandiser", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_onsite_captain", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_onsite_captain", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_onsite_captain", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_onsite_captain", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_onsite_captain", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_onsite_captain", dtype=Int64
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_onsite_captain", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_onsite_captain", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_onsite_captain", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_prep_cook", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_prep_cook", dtype=Int64),
@@ -1043,95 +969,44 @@ pro_quality_ratings_features_fv = FeatureView(
         Field(name="rv_int_n_neg_skill_cat_ratings_vip_event_server", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_vip_event_server", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_vip_event_server", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_vip_event_server",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_vip_event_server",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_vip_event_server", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_vip_event_server", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_vip_event_server", dtype=Int64),
         Field(name="rv_int_n_pos_skill_cat_ratings_warehouse_admin", dtype=Int64),
         Field(name="rv_int_n_neg_skill_cat_ratings_warehouse_admin", dtype=Int64),
         Field(name="rv_int_n_pos_attire_cat_ratings_warehouse_admin", dtype=Int64),
         Field(name="rv_int_n_neg_attire_cat_ratings_warehouse_admin", dtype=Int64),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_warehouse_admin",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_warehouse_admin",
-            dtype=Int64,
-        ),
+        Field(name="rv_int_n_positive_partner_captain_ratings_warehouse_admin", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_warehouse_admin", dtype=Int64),
         Field(name="rv_int_n_blocked_shifts_warehouse_admin", dtype=Int64),
-        Field(
-            name="rv_int_n_pos_skill_cat_ratings_warehouse_associate_entry_level",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_neg_skill_cat_ratings_warehouse_associate_entry_level",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_pos_attire_cat_ratings_warehouse_associate_entry_level",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_neg_attire_cat_ratings_warehouse_associate_entry_level",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_warehouse_associate_entry_level",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_warehouse_associate_entry_level",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_blocked_shifts_warehouse_associate_entry_level", dtype=Int64
-        ),
-        Field(
-            name="rv_int_n_pos_skill_cat_ratings_warehouse_associate_intermediate",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_neg_skill_cat_ratings_warehouse_associate_intermediate",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_pos_attire_cat_ratings_warehouse_associate_intermediate",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_neg_attire_cat_ratings_warehouse_associate_intermediate",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_positive_partner_captain_ratings_warehouse_associate_intermediate",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_negative_partner_captain_ratings_warehouse_associate_intermediate",
-            dtype=Int64,
-        ),
-        Field(
-            name="rv_int_n_blocked_shifts_warehouse_associate_intermediate", dtype=Int64
-        ),
+        Field(name="rv_int_n_pos_skill_cat_ratings_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_warehouse_associate_intermediate", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_warehouse_associate_intermediate", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_warehouse_associate_intermediate", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_warehouse_associate_intermediate", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_warehouse_associate_intermediate", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_warehouse_associate_intermediate", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_warehouse_associate_intermediate", dtype=Int64),
     ],
     source=pro_quality_ratings_features_source,
     tags={
         "source": "redshift",
         "table": "pro_quality_ratings_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Quiz Features
 pro_quiz_features_source = RedshiftSource(
     name="pro_quiz_features_source",
-    table="dbt-cchia.pro_quiz_features_inference",
+    schema="dbt-cchia",
+    table="pro_quiz_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1187,14 +1062,15 @@ pro_quiz_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_quiz_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Referral Features
 pro_referral_features_source = RedshiftSource(
     name="pro_referral_features_source",
-    table="dbt-cchia.pro_referral_features_inference",
+    schema="dbt-cchia",
+    table="pro_referral_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1239,14 +1115,15 @@ pro_referral_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_referral_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Resume Features
 pro_resume_features_source = RedshiftSource(
     name="pro_resume_features_source",
-    table="dbt-cchia.pro_resume_features_inference",
+    schema="dbt-cchia",
+    table="pro_resume_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1275,14 +1152,15 @@ pro_resume_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_resume_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Shift Features
 pro_shift_features_source = RedshiftSource(
     name="pro_shift_features_source",
-    table="dbt-cchia.pro_shift_features_inference",
+    schema="dbt-cchia",
+    table="pro_shift_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1350,14 +1228,15 @@ pro_shift_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_shift_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Shift Outcome Features
 pro_shift_outcome_features_source = RedshiftSource(
     name="pro_shift_outcome_features_source",
-    table="dbt-cchia.pro_shift_outcome_features_inference",
+    schema="dbt-cchia",
+    table="pro_shift_outcome_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1403,14 +1282,15 @@ pro_shift_outcome_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_shift_outcome_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Skill Vector Features
 pro_skill_vector_features_source = RedshiftSource(
     name="pro_skill_vector_features_source",
-    table="dbt-cchia.pro_skill_vector_features_inference",
+    schema="dbt-cchia",
+    table="pro_skill_vector_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1427,14 +1307,15 @@ pro_skill_vector_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_skill_vector_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Ticket Features
 pro_ticket_features_source = RedshiftSource(
     name="pro_ticket_features_source",
-    table="dbt-cchia.pro_ticket_features_inference",
+    schema="dbt-cchia",
+    table="pro_ticket_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1449,14 +1330,15 @@ pro_ticket_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_ticket_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
 # Pro Time Features
 pro_time_features_source = RedshiftSource(
     name="pro_time_features_source",
-    table="dbt-cchia.pro_time_features_inference",
+    schema="dbt-cchia",
+    table="pro_time_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1498,7 +1380,7 @@ pro_time_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "pro_time_features_inference",
-        "entity": "worker",
+        "entity": "worker"
     },
 )
 
@@ -1509,7 +1391,8 @@ pro_time_features_fv = FeatureView(
 # Shift Benefits Features
 shift_benefits_features_source = RedshiftSource(
     name="shift_benefits_features_source",
-    table="dbt-cchia.shift_benefits_features_inference",
+    schema="dbt-cchia",
+    table="shift_benefits_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1528,14 +1411,15 @@ shift_benefits_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "shift_benefits_features_inference",
-        "entity": "shift",
+        "entity": "shift"
     },
 )
 
 # Shift Core Features
 shift_core_features_source = RedshiftSource(
     name="shift_core_features_source",
-    table="dbt-cchia.shift_core_features_inference",
+    schema="dbt-cchia",
+    table="shift_core_features_inference",
     timestamp_field="ts_ds",
 )
 
@@ -1583,7 +1467,7 @@ shift_core_features_fv = FeatureView(
     tags={
         "source": "redshift",
         "table": "shift_core_features_inference",
-        "entity": "shift",
+        "entity": "shift"
     },
 )
 
