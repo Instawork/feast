@@ -1,61 +1,517 @@
-# all_features.py
+"""
+Feast Feature Definitions - All Features
+Auto-generated from Redshift metadata on 2025-11-20 14:03:00
+
+This file contains all entity and feature view definitions for the Feast feature store.
+
+Statistics:
+- Tables: 23
+- Total Columns: 959
+- Entities: 3
+"""
+
 from datetime import timedelta
 
-from feast import Entity, FeatureView, Field, RedshiftSource, ValueType
-from feast.types import Float32, Float64, Int32, Int64, String
+from feast import Entity, FeatureView, Field, RedshiftSource
+from feast.types import Float64, Int32, Int64, String, UnixTimestamp
 
 # ============================================================================
 # ENTITIES
 # ============================================================================
 
-worker = Entity(
-    name="id_worker_id",
-    description="Instawork Professional identifier",
-    value_type=ValueType.INT64,
+business_entity = Entity(
+    name="business", join_keys=["id_business_id"], description="Business entity"
 )
 
-business = Entity(
-    name="id_business_id",
-    description="Instawork Business identifier",
-    value_type=ValueType.INT64,
+shift_entity = Entity(
+    name="shift", join_keys=["id_shift_id"], description="Shift entity"
 )
 
-shift = Entity(
-    name="id_shift_id",
-    description="Instawork Shift identifier",
-    value_type=ValueType.INT64,
+worker_entity = Entity(
+    name="worker", join_keys=["id_worker_id"], description="Worker entity"
 )
 
 # ============================================================================
-# PRO EDUCATION FEATURES
+# BUSINESS FEATURE VIEWS
 # ============================================================================
 
-# pro_education_source = RedshiftSource(
-#     name="pro_education_source",
-#     database="instawork",
-#     schema="dbt-cchia",
-#     table="pro_education_features_inference",
-#     timestamp_field="ts_ds",
-# )
-
-pro_education_source = RedshiftSource(
-    name="pro_education_source",
-    query="""
-        SELECT *
-        FROM "dbt-cchia"."pro_education_features_inference"
-        WHERE id_worker_id IN (
-            SELECT DISTINCT id_worker_id
-            FROM "dbt-cchia"."pro_education_features_inference"
-            LIMIT 10
-        )
-        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."pro_education_features_inference")
-    """,
+# Business Features
+business_features_source = RedshiftSource(
+    name="business_features_source",
+    table="dbt-cchia.business_features_inference",
     timestamp_field="ts_ds",
 )
 
-pro_education_features = FeatureView(
+business_features_fv = FeatureView(
+    name="business_features",
+    entities=[business_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="id_company_id", dtype=Int32),
+        Field(name="mc_int_business_region", dtype=Int32),
+        Field(name="mc_str_business_region_name", dtype=String),
+        Field(name="mc_str_business_name", dtype=String),
+        Field(name="mc_str_business_display_name", dtype=String),
+        Field(name="mc_str_business_type", dtype=String),
+        Field(name="rv_int_total_shifts", dtype=Int64),
+        Field(name="rv_int_total_filled_shifts", dtype=Int64),
+        Field(name="rv_int_total_completed_shifts", dtype=Int64),
+        Field(name="rv_float_fill_rate", dtype=Float64),
+        Field(name="rv_float_avg_business_rating_by_worker", dtype=Int64),
+        Field(name="rv_float_avg_worker_rating_by_business", dtype=Int64),
+        Field(name="mc_str_partner_status", dtype=String),
+        Field(name="mc_str_partner_period", dtype=String),
+        Field(name="mc_str_partner_type", dtype=String),
+        Field(name="mc_str_primary_industry", dtype=String),
+        Field(name="mc_str_secondary_industry", dtype=String),
+        Field(name="rv_int_unique_workers", dtype=Int64),
+        Field(name="rv_int_total_unique_workers", dtype=Int64),
+        Field(name="ts_first_shift_date", dtype=UnixTimestamp),
+        Field(name="ts_last_shift_date", dtype=UnixTimestamp),
+        Field(name="rv_int_days_since_first_shift", dtype=Int64),
+        Field(name="rv_int_days_since_last_shift", dtype=Int64),
+        Field(name="rv_int_shifts_l90d", dtype=Int64),
+        Field(name="rv_int_w2_employees_only", dtype=Int64),
+        Field(name="rv_int_total_ratings_by_workers", dtype=Int64),
+        Field(name="rv_int_total_ratings_by_business", dtype=Int64),
+        Field(name="rv_float_avg_filled_shift_business_rate", dtype=Float64),
+        Field(name="rv_float_avg_unfilled_shift_business_rate", dtype=Float64),
+        Field(name="rv_float_avg_filled_shift_applicant_rate", dtype=Float64),
+        Field(name="rv_float_avg_unfilled_shift_applicant_rate", dtype=Float64),
+        Field(name="rv_int_num_gigs", dtype=Int64),
+        Field(name="rv_int_num_gigs_posted", dtype=Int64),
+        Field(name="rv_int_num_gigs_filled", dtype=Int64),
+        Field(name="rv_float_gig_fill_rate", dtype=Float64),
+        Field(name="rv_int_unique_companies", dtype=Int64),
+        Field(name="rv_int_unique_shift_days", dtype=Int64),
+        Field(name="rv_int_business_cumulative_filled_shifts", dtype=Int64),
+        Field(name="mc_str_business_timezone", dtype=String),
+        Field(name="rv_int_daily_shifts", dtype=Int64),
+        Field(name="rv_int_days_since_last_ud", dtype=Int64),
+        Field(name="ts_gig_date", dtype=UnixTimestamp),
+        Field(name="rv_int_cancelled_filled_shifts", dtype=Int64),
+        Field(name="rv_int_total_cancelled_shifts", dtype=Int64),
+        Field(name="rv_int_n_booked_shifts", dtype=Int64),
+        Field(name="rv_int_n_completed_shifts", dtype=Int64),
+        Field(name="rv_int_active_pros", dtype=Int64),
+        Field(name="rv_int_deactivated_pros", dtype=Int64),
+        Field(name="rv_int_inferred_active_pros", dtype=Int64),
+        Field(name="rv_int_rejected_pros", dtype=Int64),
+        Field(name="rv_int_removed_pros", dtype=Int64),
+    ],
+    source=business_features_source,
+    tags={
+        "source": "redshift",
+        "table": "business_features_inference",
+        "entity": "business",
+    },
+)
+
+# Business Hypertrack Features
+business_hypertrack_features_source = RedshiftSource(
+    name="business_hypertrack_features_source",
+    table="dbt-cchia.business_hypertrack_features_inference",
+    timestamp_field="ts_ds",
+)
+
+business_hypertrack_features_fv = FeatureView(
+    name="business_hypertrack_features",
+    entities=[business_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_n_business_shifts", dtype=Int64),
+        Field(name="rv_float_avg_business_tracking_rate", dtype=Float64),
+        Field(name="rv_float_avg_business_time_in_fence", dtype=Float64),
+        Field(name="rv_float_avg_business_active_time", dtype=Float64),
+        Field(name="rv_float_avg_business_total_duration", dtype=Float64),
+        Field(name="rv_float_avg_business_in_fence_rate", dtype=Float64),
+    ],
+    source=business_hypertrack_features_source,
+    tags={
+        "source": "redshift",
+        "table": "business_hypertrack_features_inference",
+        "entity": "business",
+    },
+)
+
+# Business No Show Features
+business_no_show_features_source = RedshiftSource(
+    name="business_no_show_features_source",
+    table="dbt-cchia.business_no_show_features_inference",
+    timestamp_field="ts_ds",
+)
+
+business_no_show_features_fv = FeatureView(
+    name="business_no_show_features",
+    entities=[business_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_cumulative_auto_no_shows", dtype=Int64),
+        Field(name="rv_int_business_cumulative_filled_shifts", dtype=Int64),
+        Field(name="rv_int_cumulative_corrected_auto_no_shows", dtype=Int64),
+        Field(name="rv_int_cumulative_corrected_manual_no_shows", dtype=Int64),
+        Field(name="rv_int_cumulative_manual_no_shows", dtype=Int64),
+        Field(name="rv_float_correction_rate", dtype=Float64),
+        Field(name="rv_float_manual_no_show_rate", dtype=Float64),
+        Field(name="rv_float_auto_no_show_rate", dtype=Float64),
+    ],
+    source=business_no_show_features_source,
+    tags={
+        "source": "redshift",
+        "table": "business_no_show_features_inference",
+        "entity": "business",
+    },
+)
+
+# ============================================================================
+# WORKER/PRO FEATURE VIEWS
+# ============================================================================
+
+# Pro Amplitude Features
+pro_amplitude_features_source = RedshiftSource(
+    name="pro_amplitude_features_source",
+    table="dbt-cchia.pro_amplitude_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_amplitude_features_fv = FeatureView(
+    name="pro_amplitude_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_lte_1_day_num_sessions", dtype=Int64),
+        Field(name="rv_int_lte_3_day_num_sessions", dtype=Int64),
+        Field(name="rv_int_lte_7_day_num_sessions", dtype=Int64),
+        Field(name="rv_int_lte_30_day_num_sessions", dtype=Int64),
+        Field(name="rv_int_gt_30_day_num_sessions", dtype=Int64),
+        Field(name="rv_int_lte_1_day_session_length_seconds", dtype=Int64),
+        Field(name="rv_int_lte_3_day_session_length_seconds", dtype=Int64),
+        Field(name="rv_int_lte_7_day_session_length_seconds", dtype=Int64),
+        Field(name="rv_int_lte_30_day_session_length_seconds", dtype=Int64),
+        Field(name="rv_int_gt_30_day_session_length_seconds", dtype=Int64),
+        Field(name="rv_int_lte_1_day_num_event_types", dtype=Int64),
+        Field(name="rv_int_lte_3_day_num_event_types", dtype=Int64),
+        Field(name="rv_int_lte_7_day_num_event_types", dtype=Int64),
+        Field(name="rv_int_lte_30_day_num_event_types", dtype=Int64),
+        Field(name="rv_int_gt_30_day_num_event_types", dtype=Int64),
+        Field(name="rv_int_lte_1_day_num_unique_event_types", dtype=Int64),
+        Field(name="rv_int_lte_3_day_num_unique_event_types", dtype=Int64),
+        Field(name="rv_int_lte_7_day_num_unique_event_types", dtype=Int64),
+        Field(name="rv_int_lte_30_day_num_unique_event_types", dtype=Int64),
+        Field(name="rv_int_gt_30_day_num_unique_event_types", dtype=Int64),
+        Field(name="rv_int_lte_1_day_num_unique_event_id", dtype=Int64),
+        Field(name="rv_int_lte_3_day_num_unique_event_id", dtype=Int64),
+        Field(name="rv_int_lte_7_day_num_unique_event_id", dtype=Int64),
+        Field(name="rv_int_lte_30_day_num_unique_event_id", dtype=Int64),
+        Field(name="rv_int_gt_30_day_num_unique_event_id", dtype=Int64),
+        Field(name="rv_int_total_unique_sessions", dtype=Int64),
+        Field(name="rv_float_avg_session_length_seconds", dtype=Int64),
+        Field(name="rv_int_total_session_time_seconds", dtype=Int64),
+        Field(name="rv_int_total_events", dtype=Int64),
+        Field(name="rv_int_total_unique_event_types", dtype=Int64),
+        Field(name="rv_int_total_unique_event_ids", dtype=Int64),
+        Field(name="ts_first_session_time", dtype=UnixTimestamp),
+        Field(name="ts_last_session_time", dtype=UnixTimestamp),
+        Field(name="rv_int_session_span_days", dtype=Int64),
+        Field(name="b_is_active_today", dtype=Int32),
+        Field(name="b_is_active_l3d", dtype=Int32),
+        Field(name="b_is_active_l7d", dtype=Int32),
+        Field(name="b_is_active_l30d", dtype=Int32),
+        Field(name="b_is_active_older", dtype=Int32),
+        Field(name="rv_float_avg_session_length_seconds_calc", dtype=Int64),
+        Field(name="rv_float_events_per_session", dtype=Float64),
+        Field(name="rv_float_unique_event_types_per_session", dtype=Float64),
+        Field(name="rv_float_event_type_diversity_ratio", dtype=Float64),
+        Field(name="rv_float_sessions_per_day", dtype=Float64),
+        Field(name="rv_float_total_time_per_session", dtype=Float64),
+    ],
+    source=pro_amplitude_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_amplitude_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Attire Features
+pro_attire_features_source = RedshiftSource(
+    name="pro_attire_features_source",
+    table="dbt-cchia.pro_attire_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_attire_features_fv = FeatureView(
+    name="pro_attire_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="b_accepted_black_bistro_attire", dtype=Int32),
+        Field(name="b_accepted_black_clothes_attire", dtype=Int32),
+        Field(name="b_accepted_business_casual_attire", dtype=Int32),
+        Field(name="b_accepted_chef_uniform_attire", dtype=Int32),
+        Field(name="b_accepted_kitchen_black_attire", dtype=Int32),
+        Field(name="b_accepted_warehouse_safety_attire", dtype=Int32),
+        Field(name="b_accepted_white_bistro_attire", dtype=Int32),
+        Field(name="rv_int_offshift_num_attire_submissions", dtype=Int64),
+        Field(name="rv_int_offshift_num_uploaded_attires", dtype=Int64),
+        Field(name="rv_int_offshift_num_accepted_attires", dtype=Int64),
+        Field(name="rv_int_offshift_num_rejected_attires", dtype=Int64),
+        Field(name="rv_int_offshift_num_attire_score_great_photo", dtype=Int64),
+        Field(name="rv_int_offshift_num_attire_score_pass", dtype=Int64),
+        Field(name="rv_int_offshift_num_attire_score_bad_faith_upload", dtype=Int64),
+        Field(name="rv_int_offshift_num_attire_score_earnest_effort", dtype=Int64),
+        Field(
+            name="rv_int_offshift_num_front_of_house_attire_submissions", dtype=Int64
+        ),
+        Field(name="rv_int_offshift_num_back_of_house_attire_submissions", dtype=Int64),
+        Field(name="rv_int_offshift_num_generic_attire_submissions", dtype=Int64),
+        Field(name="rv_int_num_unique_attire_types", dtype=Int64),
+        Field(name="rv_int_first_submission_accepted_count", dtype=Int64),
+        Field(name="rv_int_first_submission_rejected_count", dtype=Int64),
+        Field(name="rv_int_first_submission_pending_count", dtype=Int64),
+        Field(name="rv_int_current_accepted_attire_types", dtype=Int64),
+        Field(name="rv_int_current_rejected_attire_types", dtype=Int64),
+        Field(name="rv_int_current_pending_attire_types", dtype=Int64),
+        Field(name="rv_int_n_earnest_effort_attire_uploads", dtype=Int64),
+        Field(name="rv_int_n_great_photo_attire_uploads", dtype=Int64),
+        Field(name="rv_int_n_pass_attire_uploads", dtype=Int64),
+        Field(name="rv_int_n_bad_faith_upload_attire_uploads", dtype=Int64),
+        Field(name="rv_int_pos_attire_cat_ratings", dtype=Int64),
+        Field(name="rv_int_neg_attire_cat_ratings", dtype=Int64),
+        Field(name="rv_float_attire_acceptance_rate", dtype=Float64),
+        Field(name="rv_float_attire_rejection_rate", dtype=Float64),
+        Field(name="rv_float_attire_pending_rate", dtype=Float64),
+        Field(name="b_has_accepted_attire", dtype=Int32),
+        Field(name="b_has_rejected_attire", dtype=Int32),
+        Field(name="b_has_pending_attire", dtype=Int32),
+        Field(name="b_has_attire_submissions", dtype=Int32),
+        Field(name="b_has_accepted_attire_history", dtype=Int32),
+        Field(name="b_has_rejected_attire_history", dtype=Int32),
+        Field(name="b_has_pending_attire_history", dtype=Int32),
+        Field(name="b_has_positive_attire_feedback", dtype=Int32),
+        Field(name="b_has_negative_attire_feedback", dtype=Int32),
+    ],
+    source=pro_attire_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_attire_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Business Features
+pro_business_features_source = RedshiftSource(
+    name="pro_business_features_source",
+    table="dbt-cchia.pro_business_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_business_features_fv = FeatureView(
+    name="pro_business_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="id_business_id", dtype=Int32),
+        Field(name="id_company_id", dtype=Int32),
+        Field(name="b_is_favorite_business", dtype=Int32),
+        Field(name="b_is_blocked_business", dtype=Int32),
+        Field(name="rv_int_total_shifts_at_business", dtype=Int64),
+        Field(name="rv_int_filled_shifts_at_business", dtype=Int64),
+        Field(name="rv_int_completed_shifts_at_business", dtype=Int64),
+        Field(name="rv_int_bqo_count_at_business", dtype=Int64),
+        Field(name="rv_int_f3_shifts_at_business", dtype=Int64),
+        Field(name="rv_int_total_shifts_at_business_l90d", dtype=Int64),
+        Field(name="rv_int_total_shifts_at_business_l30d", dtype=Int64),
+        Field(name="rv_int_filled_shifts_at_business_l90d", dtype=Int64),
+        Field(name="rv_int_completed_shifts_at_business_l90d", dtype=Int64),
+        Field(name="rv_int_bqo_count_at_business_l90d", dtype=Int64),
+        Field(name="rv_int_f3_shifts_at_business_l90d", dtype=Int64),
+        Field(name="rv_float_avg_business_rating_at_business", dtype=Int64),
+        Field(name="rv_float_avg_worker_rating_at_business", dtype=Int64),
+        Field(name="rv_float_avg_business_rating_at_business_l90d", dtype=Int64),
+        Field(name="rv_float_avg_worker_rating_at_business_l90d", dtype=Int64),
+        Field(name="rv_float_avg_business_rating_by_worker", dtype=Int64),
+        Field(name="rv_float_avg_worker_rating_by_business", dtype=Int64),
+        Field(name="rv_float_avg_business_rate_at_business", dtype=Float64),
+        Field(name="rv_float_avg_worker_rate_at_business", dtype=Float64),
+        Field(name="rv_float_avg_business_rate_at_business_l90d", dtype=Float64),
+        Field(name="rv_float_avg_worker_rate_at_business_l90d", dtype=Float64),
+        Field(name="rv_float_avg_booked_shift_group_size_at_business", dtype=Int64),
+        Field(name="rv_float_avg_filled_shift_group_size_at_business", dtype=Int64),
+        Field(name="rv_float_shift_group_fill_rate_at_business", dtype=Float64),
+        Field(name="mc_str_relationship_strength_at_business", dtype=String),
+        Field(name="rv_float_assignment_rate", dtype=Int64),
+        Field(name="rv_float_bqo_rate_at_business", dtype=Int64),
+        Field(name="rv_float_f3_shift_rate_at_business", dtype=Int64),
+        Field(name="rv_float_assignment_rate_l90d", dtype=Int64),
+        Field(name="rv_float_bqo_rate_at_business_l90d", dtype=Int64),
+        Field(name="rv_float_f3_shift_rate_at_business_l90d", dtype=Int64),
+        Field(name="rv_int_unique_shift_groups_at_business", dtype=Int64),
+        Field(name="rv_int_unique_shift_days_at_business", dtype=Int64),
+        Field(name="rv_int_unique_shift_groups_at_business_l90d", dtype=Int64),
+        Field(name="rv_int_unique_shift_days_at_business_l90d", dtype=Int64),
+        Field(name="rv_int_total_ratings_by_business", dtype=Int64),
+        Field(name="rv_int_total_ratings_by_workers", dtype=Int64),
+        Field(name="rv_float_avg_filled_shift_business_rate", dtype=Float64),
+        Field(name="rv_float_avg_unfilled_shift_business_rate", dtype=Float64),
+        Field(name="rv_int_business_cumulative_filled_shifts", dtype=Int64),
+        Field(name="rv_int_cancelled_filled_shifts", dtype=Int64),
+        Field(name="rv_int_n_booked_shifts", dtype=Int64),
+        Field(name="rv_int_n_completed_shifts", dtype=Int64),
+        Field(name="rv_int_pre_booked_shifts", dtype=Int64),
+        Field(name="ts_first_shift_at_business", dtype=UnixTimestamp),
+        Field(name="ts_last_shift_at_business", dtype=UnixTimestamp),
+        Field(name="rv_int_days_since_first_shift_at_business", dtype=Int64),
+        Field(name="rv_int_days_since_last_shift_at_business", dtype=Int64),
+    ],
+    source=pro_business_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_business_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Company Features
+pro_company_features_source = RedshiftSource(
+    name="pro_company_features_source",
+    table="dbt-cchia.pro_company_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_company_features_fv = FeatureView(
+    name="pro_company_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_n_companies", dtype=Int64),
+    ],
+    source=pro_company_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_company_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Core Features
+pro_core_features_source = RedshiftSource(
+    name="pro_core_features_source",
+    table="dbt-cchia.pro_core_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_core_features_fv = FeatureView(
+    name="pro_core_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="b_has_name", dtype=Int32),
+        Field(name="b_is_email_verified", dtype=Int32),
+        Field(name="b_is_phonenum_verified", dtype=Int32),
+        Field(name="b_is_unsubscribe", dtype=Int32),
+        Field(name="b_has_address", dtype=Int32),
+        Field(name="b_has_resume", dtype=Int32),
+        Field(name="b_has_profileimagename", dtype=Int32),
+        Field(name="b_has_bank_account_number", dtype=Int32),
+        Field(name="b_has_bank_routing_number", dtype=Int32),
+        Field(name="b_has_date_of_birth", dtype=Int32),
+        Field(name="b_has_ssn", dtype=Int32),
+        Field(name="b_is_device", dtype=Int32),
+        Field(name="b_is_partial", dtype=Int32),
+        Field(name="mc_str_applicant_app_os", dtype=String),
+        Field(name="b_is_unsubscribe_introductions", dtype=Int32),
+        Field(name="b_is_unsubscribe_looking", dtype=Int32),
+        Field(name="b_is_reference_signup", dtype=Int32),
+        Field(name="b_has_carpool_preference", dtype=Int32),
+        Field(name="b_can_carpool", dtype=Int32),
+        Field(name="b_has_vehicle_filled", dtype=Int32),
+        Field(name="b_has_vehicle", dtype=Int32),
+        Field(name="b_has_driving_license_filled", dtype=Int32),
+        Field(name="b_has_driving_license", dtype=Int32),
+        Field(name="b_is_video_approved", dtype=Int32),
+        Field(name="b_has_followed_region_onboarding", dtype=Int32),
+        Field(name="b_has_contacts_sync", dtype=Int32),
+        Field(name="b_created_from_staff_list", dtype=Int32),
+        Field(name="b_has_limited_gig_access", dtype=Int32),
+        Field(name="b_w2_eligible", dtype=Int32),
+        Field(name="mc_int_background_check_status", dtype=Int32),
+        Field(name="mc_int_motor_vehicle_check_status", dtype=Int32),
+        Field(name="mc_int_w2_status", dtype=Int32),
+        Field(name="b_has_hypertrack_user_id", dtype=Int32),
+        Field(name="b_is_pushtoken_active", dtype=Int32),
+        Field(name="b_has_work_experience", dtype=Int32),
+        Field(name="mc_str_worker_status", dtype=String),
+        Field(name="mc_str_worker_level", dtype=String),
+        Field(name="ts_worker_level_updated_at", dtype=UnixTimestamp),
+        Field(name="rv_int_days_at_worker_level", dtype=Int32),
+        Field(name="rv_int_count_gold_level", dtype=Int64),
+        Field(name="rv_int_count_silver_level", dtype=Int64),
+        Field(name="rv_int_count_bronze_level", dtype=Int64),
+        Field(name="rv_int_count_platinum_level", dtype=Int64),
+        Field(name="ts_latest_date_gold_achieved", dtype=UnixTimestamp),
+        Field(name="ts_oldest_date_gold_achieved", dtype=UnixTimestamp),
+        Field(name="ts_latest_date_silver_achieved", dtype=UnixTimestamp),
+        Field(name="ts_oldest_date_silver_achieved", dtype=UnixTimestamp),
+        Field(name="ts_latest_date_bronze_achieved", dtype=UnixTimestamp),
+        Field(name="ts_oldest_date_bronze_achieved", dtype=UnixTimestamp),
+        Field(name="ts_latest_date_platinum_achieved", dtype=UnixTimestamp),
+        Field(name="ts_oldest_date_platinum_achieved", dtype=UnixTimestamp),
+        Field(name="rv_int_max_level_achieved", dtype=Int32),
+        Field(name="rv_int_like_count", dtype=Int32),
+        Field(name="rv_int_noshow_count", dtype=Int32),
+        Field(name="rv_int_unlike_count", dtype=Int32),
+        Field(name="rv_int_days_from_last_active", dtype=Int32),
+        Field(name="rv_int_days_from_last_login", dtype=Int32),
+        Field(name="rv_int_days_from_last_modified", dtype=Int32),
+        Field(name="ts_last_active", dtype=UnixTimestamp),
+        Field(name="ts_last_login", dtype=UnixTimestamp),
+        Field(name="ts_date_created", dtype=UnixTimestamp),
+        Field(name="ts_date_modified", dtype=UnixTimestamp),
+        Field(name="b_has_food_handlers_card", dtype=Int32),
+        Field(name="b_has_drivers_license_cert", dtype=Int32),
+        Field(name="b_has_alcohol_certificate", dtype=Int32),
+        Field(name="b_has_other_certification", dtype=Int32),
+        Field(name="b_has_forklift_certification", dtype=Int32),
+        Field(name="b_has_vaccination_certificate", dtype=Int32),
+        Field(name="b_has_california_rbs_certificate", dtype=Int32),
+        Field(name="mt_offshift_interested_positions", dtype=String),
+        Field(name="rv_int_offshift_num_pos_interests", dtype=Int64),
+        Field(name="mt_interested_positions", dtype=String),
+        Field(name="rv_int_num_pos_interests", dtype=Int64),
+        Field(name="rv_int_total_ratings_received", dtype=Int64),
+        Field(name="rv_int_total_ratings_given", dtype=Int64),
+        Field(name="rv_float_avg_rating_by_worker", dtype=Int64),
+        Field(name="b_active_last_7_days", dtype=Int32),
+        Field(name="b_active_last_30_days", dtype=Int32),
+        Field(name="b_logged_in_last_7_days", dtype=Int32),
+        Field(name="b_logged_in_last_30_days", dtype=Int32),
+        Field(name="rv_int_account_age_days", dtype=Int64),
+        Field(name="b_veteran_account", dtype=Int32),
+        Field(name="b_new_account", dtype=Int32),
+        Field(name="rv_int_n_favorites", dtype=Int64),
+        Field(name="rv_int_n_blocks", dtype=Int64),
+        Field(name="rv_int_n_company_preferences", dtype=Int64),
+        Field(name="ts_feats_end_date", dtype=UnixTimestamp),
+    ],
+    source=pro_core_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_core_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Education Features
+pro_education_features_source = RedshiftSource(
+    name="pro_education_features_source",
+    table="dbt-cchia.pro_education_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_education_features_fv = FeatureView(
     name="pro_education_features",
-    entities=[worker],
+    entities=[worker_entity],
     ttl=timedelta(days=365),
     schema=[
         Field(name="b_has_degree_associates", dtype=Int32),
@@ -72,10 +528,10 @@ pro_education_features = FeatureView(
         Field(name="b_has_offshift_degree_hotel_school", dtype=Int32),
         Field(name="b_has_offshift_degree_some_college", dtype=Int32),
         Field(name="rv_int_education_level", dtype=Int32),
-        Field(name="rv_int_total_education_entries", dtype=Int32),
-        Field(name="rv_int_unique_schools_attended", dtype=Int32),
-        Field(name="rv_int_unique_degrees_earned", dtype=Int32),
-        Field(name="rv_float_avg_education_duration_years", dtype=Float32),
+        Field(name="rv_int_total_education_entries", dtype=Int64),
+        Field(name="rv_int_unique_schools_attended", dtype=Int64),
+        Field(name="rv_int_unique_degrees_earned", dtype=Int64),
+        Field(name="rv_float_avg_education_duration_years", dtype=Int64),
         Field(name="rv_int_earliest_education_start_year", dtype=Int32),
         Field(name="rv_int_latest_education_end_year", dtype=Int32),
         Field(name="rv_int_years_since_last_education", dtype=Int32),
@@ -84,172 +540,1092 @@ pro_education_features = FeatureView(
         Field(name="b_has_higher_education", dtype=Int32),
         Field(name="mc_str_education_level_category", dtype=String),
     ],
-    online=True,
-    source=pro_education_source,
-    tags={"owner": "data_team", "domain": "pro_profile", "category": "education"},
+    source=pro_education_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_education_features_inference",
+        "entity": "worker",
+    },
 )
 
-# ============================================================================
-# BUSINESS FEATURES
-# ============================================================================
-
-# business_features_source = RedshiftSource(
-#     name="business_features_source",
-#     database="instawork",
-#     schema="dbt-cchia",
-#     table="business_features_inference",
-#     timestamp_field="ts_ds",
-# )
-
-
-business_features_source = RedshiftSource(
-    name="pro_education_source",
-    query="""
-        SELECT *
-        FROM "dbt-cchia"."business_features_inference"
-        WHERE id_business_id IN (
-            SELECT DISTINCT id_business_id
-            FROM "dbt-cchia"."business_features_inference"
-            LIMIT 10
-        )
-        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."business_features_inference")
-    """,
+# Pro Experience Features
+pro_experience_features_source = RedshiftSource(
+    name="pro_experience_features_source",
+    table="dbt-cchia.pro_experience_features_inference",
     timestamp_field="ts_ds",
 )
 
-business_features = FeatureView(
-    name="business_features",
-    entities=[business],
+pro_experience_features_fv = FeatureView(
+    name="pro_experience_features",
+    entities=[worker_entity],
     ttl=timedelta(days=365),
     schema=[
-        # IDs
-        Field(name="id_company_id", dtype=Int64),
-        # Region and location
-        Field(name="mc_int_business_region", dtype=Int32),
-        Field(name="mc_str_business_region_name", dtype=String),
-        Field(name="mc_str_business_name", dtype=String),
-        Field(name="mc_str_business_display_name", dtype=String),
-        Field(name="mc_str_business_type", dtype=String),
-        Field(name="mc_str_business_timezone", dtype=String),
-        # Shift metrics
-        Field(name="rv_int_total_shifts", dtype=Float64),
-        Field(name="rv_int_total_filled_shifts", dtype=Float64),
-        Field(name="rv_int_total_completed_shifts", dtype=Float64),
-        Field(name="rv_float_fill_rate", dtype=Float64),
-        Field(name="rv_int_shifts_l90d", dtype=Float64),
-        Field(name="rv_int_daily_shifts", dtype=Float64),
-        Field(name="rv_int_cancelled_filled_shifts", dtype=Float64),
-        Field(name="rv_int_total_cancelled_shifts", dtype=Float64),
-        Field(name="rv_int_n_booked_shifts", dtype=Float64),
-        Field(name="rv_int_n_completed_shifts", dtype=Float64),
-        # Ratings
-        Field(name="rv_float_avg_business_rating_by_worker", dtype=Float64),
-        Field(name="rv_float_avg_worker_rating_by_business", dtype=Float64),
-        Field(name="rv_int_total_ratings_by_workers", dtype=Float64),
-        Field(name="rv_int_total_ratings_by_business", dtype=Float64),
-        # Partner information
-        Field(name="mc_str_partner_status", dtype=String),
-        Field(name="mc_str_partner_period", dtype=String),
-        Field(name="mc_str_partner_type", dtype=String),
-        Field(name="mc_str_primary_industry", dtype=String),
-        Field(name="mc_str_secondary_industry", dtype=String),
-        # Worker metrics
-        Field(name="rv_int_unique_workers", dtype=Float64),
-        Field(name="rv_int_total_unique_workers", dtype=Float64),
-        Field(name="rv_int_w2_employees_only", dtype=Float64),
-        Field(name="rv_int_active_pros", dtype=Float64),
-        Field(name="rv_int_deactivated_pros", dtype=Float64),
-        Field(name="rv_int_inferred_active_pros", dtype=Float64),
-        Field(name="rv_int_rejected_pros", dtype=Float64),
-        Field(name="rv_int_removed_pros", dtype=Float64),
-        # Dates and timing
-        Field(name="ts_first_shift_date", dtype=String),
-        Field(name="ts_last_shift_date", dtype=String),
-        Field(name="rv_int_days_since_first_shift", dtype=Float64),
-        Field(name="rv_int_days_since_last_shift", dtype=Float64),
-        Field(name="rv_int_days_since_last_ud", dtype=Float64),
-        Field(name="ts_gig_date", dtype=String),
-        # Rate metrics
-        Field(name="rv_float_avg_filled_shift_business_rate", dtype=Float64),
-        Field(name="rv_float_avg_unfilled_shift_business_rate", dtype=Float64),
-        Field(name="rv_float_avg_filled_shift_applicant_rate", dtype=Float64),
-        Field(name="rv_float_avg_unfilled_shift_applicant_rate", dtype=Float64),
-        # Gig metrics
-        Field(name="rv_int_num_gigs", dtype=Float64),
-        Field(name="rv_int_num_gigs_posted", dtype=Float64),
-        Field(name="rv_int_num_gigs_filled", dtype=Float64),
-        Field(name="rv_float_gig_fill_rate", dtype=Float64),
-        # Other metrics
-        Field(name="rv_int_unique_companies", dtype=Float64),
-        Field(name="rv_int_unique_shift_days", dtype=Float64),
-        Field(name="rv_int_business_cumulative_filled_shifts", dtype=Float64),
+        Field(name="rv_int_forklift_driver_tenure", dtype=Int64),
+        Field(name="rv_int_cashier_tenure", dtype=Int64),
+        Field(name="rv_int_warehouse_associate_tenure", dtype=Int64),
+        Field(name="rv_int_server_tenure", dtype=Int64),
+        Field(name="rv_int_busser_tenure", dtype=Int64),
+        Field(name="rv_int_line_cook_tenure", dtype=Int64),
+        Field(name="rv_int_prep_cook_tenure", dtype=Int64),
+        Field(name="rv_int_housekeeper_tenure", dtype=Int64),
+        Field(name="rv_int_general_labor_tenure", dtype=Int64),
+        Field(name="rv_int_driver_tenure", dtype=Int64),
+        Field(name="rv_int_porter_tenure", dtype=Int64),
+        Field(name="rv_int_fast_food_tenure", dtype=Int64),
+        Field(name="rv_int_delivery_companies_tenure", dtype=Int64),
+        Field(name="rv_int_retail_tenure", dtype=Int64),
+        Field(name="rv_int_customer_service_tenure", dtype=Int64),
+        Field(name="rv_int_warehouse_tenure", dtype=Int64),
+        Field(name="rv_int_staffing_agency_tenure", dtype=Int64),
+        Field(name="rv_int_food_services_tenure", dtype=Int64),
+        Field(name="rv_int_restaurant_tenure", dtype=Int64),
+        Field(name="rv_int_cafe_tenure", dtype=Int64),
+        Field(name="rv_int_military_tenure", dtype=Int64),
+        Field(name="rv_int_mcdonalds_tenure", dtype=Int64),
+        Field(name="rv_int_walmart_tenure", dtype=Int64),
+        Field(name="rv_int_uber_tenure", dtype=Int64),
+        Field(name="rv_int_amazon_tenure", dtype=Int64),
+        Field(name="rv_int_home_depot_tenure", dtype=Int64),
+        Field(name="rv_int_whole_foods_tenure", dtype=Int64),
+        Field(name="rv_int_people_ready_tenure", dtype=Int64),
+        Field(name="rv_int_ups_tenure", dtype=Int64),
+        Field(name="rv_int_popeyes_tenure", dtype=Int64),
+        Field(name="rv_int_target_tenure", dtype=Int64),
+        Field(name="rv_int_taco_bell_tenure", dtype=Int64),
+        Field(name="rv_int_fedex_ground_tenure", dtype=Int64),
+        Field(name="rv_int_chipotle_tenure", dtype=Int64),
+        Field(name="rv_int_starbucks_tenure", dtype=Int64),
+        Field(name="rv_int_applebees_tenure", dtype=Int64),
+        Field(name="rv_int_burger_king_tenure", dtype=Int64),
+        Field(name="rv_int_subway_tenure", dtype=Int64),
+        Field(name="rv_int_wendys_tenure", dtype=Int64),
+        Field(name="rv_int_doordash_tenure", dtype=Int64),
+        Field(name="rv_int_chick_fil_a_tenure", dtype=Int64),
+        Field(name="rv_int_pizza_hut_tenure", dtype=Int64),
+        Field(name="rv_int_ihop_tenure", dtype=Int64),
+        Field(name="rv_int_panera_bread_tenure", dtype=Int64),
+        Field(name="rv_int_olive_garden_tenure", dtype=Int64),
+        Field(name="rv_int_buffalo_wild_wings_tenure", dtype=Int64),
+        Field(name="rv_int_instacart_tenure", dtype=Int64),
+        Field(name="rv_int_dominos_tenure", dtype=Int64),
+        Field(name="rv_int_chilis_tenure", dtype=Int64),
+        Field(name="rv_int_sonic_tenure", dtype=Int64),
+        Field(name="rv_int_waffle_house_tenure", dtype=Int64),
+        Field(name="rv_int_red_lobster_tenure", dtype=Int64),
+        Field(name="rv_int_dennys_tenure", dtype=Int64),
+        Field(name="rv_int_kfc_tenure", dtype=Int64),
+        Field(name="rv_int_the_cheesecake_factory_tenure", dtype=Int64),
+        Field(name="rv_int_jack_in_the_box_tenure", dtype=Int64),
+        Field(name="rv_int_dollar_tree_tenure", dtype=Int64),
+        Field(name="rv_int_little_caesars_pizza_tenure", dtype=Int64),
+        Field(name="rv_int_walgreens_tenure", dtype=Int64),
+        Field(name="rv_int_whataburger_tenure", dtype=Int64),
+        Field(name="rv_int_aramark_tenure", dtype=Int64),
+        Field(name="rv_int_macys_tenure", dtype=Int64),
+        Field(name="rv_int_family_dollar_tenure", dtype=Int64),
+        Field(name="rv_int_allied_universal_tenure", dtype=Int64),
+        Field(name="rv_int_self_employed_tenure", dtype=Int64),
+        Field(name="rv_int_lowes_home_improvement_tenure", dtype=Int64),
+        Field(name="rv_int_outback_steakhouse_tenure", dtype=Int64),
+        Field(name="rv_int_seven_eleven_tenure", dtype=Int64),
+        Field(name="rv_int_kroger_tenure", dtype=Int64),
+        Field(name="rv_int_tgi_fridays_tenure", dtype=Int64),
+        Field(name="rv_int_united_states_postal_service_tenure", dtype=Int64),
+        Field(name="rv_int_five_guys_tenure", dtype=Int64),
+        Field(name="rv_int_ross_dress_for_less_tenure", dtype=Int64),
+        Field(name="rv_int_dollar_general_tenure", dtype=Int64),
+        Field(name="rv_int_papa_johns_pizza_tenure", dtype=Int64),
+        Field(name="rv_int_dunkin_donuts_tenure", dtype=Int64),
+        Field(name="rv_int_safeway_tenure", dtype=Int64),
+        Field(name="rv_int_wingstop_tenure", dtype=Int64),
+        Field(name="rv_int_cracker_barrel_tenure", dtype=Int64),
+        Field(name="rv_int_shake_shack_tenure", dtype=Int64),
+        Field(name="rv_int_sodexo_tenure", dtype=Int64),
+        Field(name="rv_int_costco_wholesale_tenure", dtype=Int64),
+        Field(name="rv_int_levy_restaurants_tenure", dtype=Int64),
+        Field(name="rv_int_postmates_tenure", dtype=Int64),
+        Field(name="rv_int_texas_roadhouse_tenure", dtype=Int64),
+        Field(name="rv_int_red_robin_tenure", dtype=Int64),
+        Field(name="rv_int_jimmy_johns_tenure", dtype=Int64),
+        Field(name="rv_int_us_army_tenure", dtype=Int64),
+        Field(name="rv_int_wonolo_tenure", dtype=Int64),
+        Field(name="rv_int_bjs_tenure", dtype=Int64),
+        Field(name="rv_int_circle_k_tenure", dtype=Int64),
+        Field(name="rv_int_burlington_tenure", dtype=Int64),
+        Field(name="rv_int_steak_n_shake_tenure", dtype=Int64),
+        Field(name="rv_int_raising_canes_tenure", dtype=Int64),
+        Field(name="rv_int_panda_express_tenure", dtype=Int64),
+        Field(name="rv_int_kohls_tenure", dtype=Int64),
+        Field(name="rv_int_best_buy_tenure", dtype=Int64),
+        Field(name="rv_int_chuck_e_cheese_tenure", dtype=Int64),
+        Field(name="rv_int_zaxbys_chicken_fingers_buffalo_wings_tenure", dtype=Int64),
+        Field(name="rv_int_nordstrom_tenure", dtype=Int64),
+        Field(name="rv_int_cvs_tenure", dtype=Int64),
+        Field(name="rv_int_arbys_tenure", dtype=Int64),
+        Field(name="rv_int_lgc_hospitality_tenure", dtype=Int64),
+        Field(name="rv_int_in_n_out_burger_tenure", dtype=Int64),
+        Field(name="rv_int_sams_club_tenure", dtype=Int64),
+        Field(name="rv_int_dave_and_busters_tenure", dtype=Int64),
+        Field(name="rv_int_forever_21_tenure", dtype=Int64),
+        Field(name="rv_int_pf_changs_tenure", dtype=Int64),
+        Field(name="rv_int_ruby_tuesday_tenure", dtype=Int64),
+        Field(name="rv_int_jcpenney_tenure", dtype=Int64),
+        Field(name="rv_int_jersey_mikes_subs_tenure", dtype=Int64),
+        Field(name="rv_int_hooters_tenure", dtype=Int64),
+        Field(name="rv_int_golden_corral_tenure", dtype=Int64),
+        Field(name="rv_int_autozone_tenure", dtype=Int64),
+        Field(name="rv_int_topgolf_tenure", dtype=Int64),
+        Field(name="rv_int_hellofresh_tenure", dtype=Int64),
+        Field(name="rv_int_marshalls_tenure", dtype=Int64),
+        Field(name="rv_int_old_navy_tenure", dtype=Int64),
+        Field(name="rv_int_express_employment_professionals_tenure", dtype=Int64),
+        Field(name="rv_int_tesla_tenure", dtype=Int64),
+        Field(name="rv_int_securitas_tenure", dtype=Int64),
+        Field(name="rv_int_us_navy_tenure", dtype=Int64),
+        Field(name="rv_int_tj_maxx_tenure", dtype=Int64),
+        Field(name="rv_int_white_castle_tenure", dtype=Int64),
+        Field(name="rv_int_dairy_queen_tenure", dtype=Int64),
+        Field(name="rv_int_longhorn_steakhouse_tenure", dtype=Int64),
+        Field(name="rv_int_boston_market_tenure", dtype=Int64),
+        Field(name="rv_int_lyft_tenure", dtype=Int64),
+        Field(name="rv_int_del_taco_tenure", dtype=Int64),
+        Field(name="rv_int_wawa_tenure", dtype=Int64),
+        Field(name="rv_int_bluecrew_tenure", dtype=Int64),
+        Field(name="rv_int_heb_tenure", dtype=Int64),
+        Field(name="rv_int_checkers_tenure", dtype=Int64),
+        Field(name="rv_int_qwick_tenure", dtype=Int64),
+        Field(name="rv_int_compass_group_tenure", dtype=Int64),
+        Field(name="rv_int_cheddars_scratch_kitchen_tenure", dtype=Int64),
+        Field(name="rv_int_round_table_pizza_tenure", dtype=Int64),
+        Field(name="rv_int_goodwill_tenure", dtype=Int64),
+        Field(name="rv_int_sofi_stadium_tenure", dtype=Int64),
+        Field(name="rv_int_pappadeaux_seafood_kitchen_tenure", dtype=Int64),
+        Field(name="rv_int_sprouts_farmers_market_tenure", dtype=Int64),
+        Field(name="rv_int_bath_and_body_works_tenure", dtype=Int64),
+        Field(name="rv_int_generic_warehouse_tenure", dtype=Int64),
+        Field(name="rv_int_albertsons_tenure", dtype=Int64),
+        Field(name="rv_int_sweetgreen_tenure", dtype=Int64),
+        Field(name="rv_int_bed_bath_and_beyond_tenure", dtype=Int64),
+        Field(name="rv_int_ihss_tenure", dtype=Int64),
+        Field(name="rv_int_carls_jr_tenure", dtype=Int64),
+        Field(name="rv_int_quicktrip_tenure", dtype=Int64),
+        Field(name="rv_int_foot_locker_tenure", dtype=Int64),
+        Field(name="rv_int_jewel_osco_tenure", dtype=Int64),
+        Field(name="rv_int_party_city_tenure", dtype=Int64),
+        Field(name="rv_int_trader_joes_tenure", dtype=Int64),
+        Field(name="rv_int_num_unique_current_exps", dtype=Int64),
+        Field(name="rv_int_num_unique_past_exps", dtype=Int64),
+        Field(name="rv_int_num_unique_staffing_agency_exps", dtype=Int64),
+        Field(name="rv_int_num_unique_non_staffing_agency_exps", dtype=Int64),
+        Field(name="rv_int_current_exp_months", dtype=Int64),
+        Field(name="rv_int_past_exp_months", dtype=Int64),
+        Field(name="rv_int_staffing_agency_exp", dtype=Int64),
+        Field(name="rv_int_non_staffing_agency_exp", dtype=Int64),
     ],
-    online=True,
-    source=business_features_source,
-    tags={"owner": "data_team", "domain": "business_profile"},
+    source=pro_experience_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_experience_features_inference",
+        "entity": "worker",
+    },
 )
 
-# ============================================================================
-# SHIFT CORE FEATURES
-# ============================================================================
-
-shift_core_features_source = RedshiftSource(
-    name="shift_core_features_source",
-    database="instawork",
-    schema="dbt-cchia",
-    table="shift_core_features_inference",
+# Pro Hypertrack Features
+pro_hypertrack_features_source = RedshiftSource(
+    name="pro_hypertrack_features_source",
+    table="dbt-cchia.pro_hypertrack_features_inference",
     timestamp_field="ts_ds",
 )
 
-shift_core_features = FeatureView(
-    name="shift_core_features",
-    entities=[shift],
-    ttl=timedelta(days=90),  # Shorter TTL for shift data
+pro_hypertrack_features_fv = FeatureView(
+    name="pro_hypertrack_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
     schema=[
-        # IDs
-        Field(name="id_shift_group_id", dtype=Int64),
-        Field(name="id_worker_id", dtype=Int64),
-        Field(name="id_business_id", dtype=Int64),
-        Field(name="id_company_id", dtype=Int64),
-        Field(name="id_position_id", dtype=Int64),
-        Field(name="id_regionmapping_id", dtype=Int64),
-        # Timestamps
-        Field(name="ts_shift_created_at", dtype=String),
-        Field(name="ts_shift_starts_at", dtype=String),
-        Field(name="ts_shift_ends_at", dtype=String),
-        Field(name="ts_shift_group_created_at", dtype=String),
-        # Boolean flags
+        Field(name="rv_int_cumulative_filled_shifts", dtype=Int64),
+        Field(name="rv_float_cumulative_avg_pro_tracking_rate", dtype=Float64),
+        Field(name="rv_float_cumulative_avg_pro_in_fence_rate", dtype=Float64),
+    ],
+    source=pro_hypertrack_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_hypertrack_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Position Rating Features
+pro_position_rating_features_source = RedshiftSource(
+    name="pro_position_rating_features_source",
+    table="dbt-cchia.pro_position_rating_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_position_rating_features_fv = FeatureView(
+    name="pro_position_rating_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="id_position_id", dtype=Int32),
+        Field(name="mc_str_ai_coach_approval", dtype=String),
+        Field(name="mc_str_resume_position_ai_rating", dtype=Float64),
+        Field(name="b_ai_strong_yes_coach_approval", dtype=Int32),
+    ],
+    source=pro_position_rating_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_position_rating_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Quality Ratings Features
+pro_quality_ratings_features_source = RedshiftSource(
+    name="pro_quality_ratings_features_source",
+    table="dbt-cchia.pro_quality_ratings_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_quality_ratings_features_fv = FeatureView(
+    name="pro_quality_ratings_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_n_negative_attitude_ratings", dtype=Int64),
+        Field(name="rv_int_n_positive_attitude_ratings", dtype=Int64),
+        Field(name="rv_int_n_negative_trust_and_safety_ratings", dtype=Int64),
+        Field(name="rv_int_n_positive_trust_and_safety_ratings", dtype=Int64),
+        Field(name="rv_int_n_total_positive_partner_captain_ratings", dtype=Int64),
+        Field(name="rv_int_n_total_negative_partner_captain_ratings", dtype=Int64),
+        Field(name="rv_int_n_total_blocks", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_barback", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_barback", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_barback", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_barback", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_barback", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_barback", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_barback", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_bartender", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_bartender", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_bartender", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_bartender", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_bartender", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_bartender", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_bartender", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_brand_ambassador", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_brand_ambassador", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_brand_ambassador", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_brand_ambassador", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_brand_ambassador",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_brand_ambassador",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_brand_ambassador", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_busser", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_busser", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_busser", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_busser", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_busser", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_busser", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_busser", dtype=Int64),
+        Field(
+            name="rv_int_n_pos_skill_cat_ratings_concession__stand_worker", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_skill_cat_ratings_concession__stand_worker", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_pos_attire_cat_ratings_concession__stand_worker", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_attire_cat_ratings_concession__stand_worker", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_concession__stand_worker",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_concession__stand_worker",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_concession__stand_worker", dtype=Int64),
+        Field(
+            name="rv_int_n_pos_skill_cat_ratings_counter_staff__cashier", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_skill_cat_ratings_counter_staff__cashier", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_pos_attire_cat_ratings_counter_staff__cashier", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_attire_cat_ratings_counter_staff__cashier", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_counter_staff__cashier",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_counter_staff__cashier",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_counter_staff__cashier", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_custodial", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_custodial", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_custodial", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_custodial", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_custodial", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_custodial", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_custodial", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_event_server", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_event_server", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_event_server", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_event_server", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_event_server", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_event_server", dtype=Int64
+        ),
+        Field(name="rv_int_n_blocked_shifts_event_server", dtype=Int64),
+        Field(
+            name="rv_int_n_pos_skill_cat_ratings_event_setup_and_takedown", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_skill_cat_ratings_event_setup_and_takedown", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_pos_attire_cat_ratings_event_setup_and_takedown", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_attire_cat_ratings_event_setup_and_takedown", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_event_setup_and_takedown",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_event_setup_and_takedown",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_event_setup_and_takedown", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_food_service_worker", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_food_service_worker", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_food_service_worker", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_food_service_worker", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_food_service_worker",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_food_service_worker",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_food_service_worker", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_forklift_driver", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_forklift_driver", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_forklift_driver", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_forklift_driver", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_forklift_driver",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_forklift_driver",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_forklift_driver", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_general_labor", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_general_labor", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_general_labor", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_general_labor", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_general_labor", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_general_labor", dtype=Int64
+        ),
+        Field(name="rv_int_n_blocked_shifts_general_labor", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_housekeeper", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_housekeeper", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_housekeeper", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_housekeeper", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_housekeeper", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_housekeeper", dtype=Int64
+        ),
+        Field(name="rv_int_n_blocked_shifts_housekeeper", dtype=Int64),
+        Field(
+            name="rv_int_n_pos_skill_cat_ratings_housekeeping_assistant", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_skill_cat_ratings_housekeeping_assistant", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_pos_attire_cat_ratings_housekeeping_assistant", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_neg_attire_cat_ratings_housekeeping_assistant", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_housekeeping_assistant",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_housekeeping_assistant",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_housekeeping_assistant", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_line_cook", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_line_cook", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_line_cook", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_line_cook", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_line_cook", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_line_cook", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_line_cook", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_merchandiser", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_merchandiser", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_merchandiser", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_merchandiser", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_merchandiser", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_merchandiser", dtype=Int64
+        ),
+        Field(name="rv_int_n_blocked_shifts_merchandiser", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_onsite_captain", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_onsite_captain", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_onsite_captain", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_onsite_captain", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_onsite_captain", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_onsite_captain", dtype=Int64
+        ),
+        Field(name="rv_int_n_blocked_shifts_onsite_captain", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_runner", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_runner", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_runner", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_runner", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_runner", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_runner", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_runner", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_supervisor", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_supervisor", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_supervisor", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_supervisor", dtype=Int64),
+        Field(name="rv_int_n_positive_partner_captain_ratings_supervisor", dtype=Int64),
+        Field(name="rv_int_n_negative_partner_captain_ratings_supervisor", dtype=Int64),
+        Field(name="rv_int_n_blocked_shifts_supervisor", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_vip_event_server", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_vip_event_server", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_vip_event_server", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_vip_event_server", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_vip_event_server",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_vip_event_server",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_vip_event_server", dtype=Int64),
+        Field(name="rv_int_n_pos_skill_cat_ratings_warehouse_admin", dtype=Int64),
+        Field(name="rv_int_n_neg_skill_cat_ratings_warehouse_admin", dtype=Int64),
+        Field(name="rv_int_n_pos_attire_cat_ratings_warehouse_admin", dtype=Int64),
+        Field(name="rv_int_n_neg_attire_cat_ratings_warehouse_admin", dtype=Int64),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_warehouse_admin",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_warehouse_admin",
+            dtype=Int64,
+        ),
+        Field(name="rv_int_n_blocked_shifts_warehouse_admin", dtype=Int64),
+        Field(
+            name="rv_int_n_pos_skill_cat_ratings_warehouse_associate_entry_level",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_neg_skill_cat_ratings_warehouse_associate_entry_level",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_pos_attire_cat_ratings_warehouse_associate_entry_level",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_neg_attire_cat_ratings_warehouse_associate_entry_level",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_warehouse_associate_entry_level",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_warehouse_associate_entry_level",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_blocked_shifts_warehouse_associate_entry_level", dtype=Int64
+        ),
+        Field(
+            name="rv_int_n_pos_skill_cat_ratings_warehouse_associate_intermediate",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_neg_skill_cat_ratings_warehouse_associate_intermediate",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_pos_attire_cat_ratings_warehouse_associate_intermediate",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_neg_attire_cat_ratings_warehouse_associate_intermediate",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_positive_partner_captain_ratings_warehouse_associate_intermediate",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_negative_partner_captain_ratings_warehouse_associate_intermediate",
+            dtype=Int64,
+        ),
+        Field(
+            name="rv_int_n_blocked_shifts_warehouse_associate_intermediate", dtype=Int64
+        ),
+    ],
+    source=pro_quality_ratings_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_quality_ratings_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Quiz Features
+pro_quiz_features_source = RedshiftSource(
+    name="pro_quiz_features_source",
+    table="dbt-cchia.pro_quiz_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_quiz_features_fv = FeatureView(
+    name="pro_quiz_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_num_quiz_attempted", dtype=Int64),
+        Field(name="rv_int_num_quiz_passed", dtype=Int64),
+        Field(name="rv_int_total_correct_answers", dtype=Float64),
+        Field(name="rv_int_total_questions_attempted", dtype=Float64),
+        Field(name="rv_int_quiz_attempt_days", dtype=Int64),
+        Field(name="rv_int_quiz_attempts_l30d", dtype=Int64),
+        Field(name="rv_int_quiz_attempts_l90d", dtype=Int64),
+        Field(name="rv_int_num_unique_quiz_configs", dtype=Int64),
+        Field(name="rv_float_avg_pass_quiz_score", dtype=Float64),
+        Field(name="rv_int_offshift_num_quiz_attempted", dtype=Int64),
+        Field(name="rv_int_offshift_num_quiz_passed", dtype=Int64),
+        Field(name="rv_float_offshift_avg_quiz_score", dtype=Float64),
+        Field(name="rv_int_offshift_total_correct_answers", dtype=Float64),
+        Field(name="rv_int_offshift_total_questions_attempted", dtype=Float64),
+        Field(name="rv_float_offshift_avg_quiz_accuracy", dtype=Float64),
+        Field(name="rv_float_avg_quiz_accuracy", dtype=Float64),
+        Field(name="rv_float_avg_quiz_score", dtype=Float64),
+        Field(name="rv_float_min_quiz_score", dtype=Float64),
+        Field(name="rv_float_max_quiz_score", dtype=Float64),
+        Field(name="rv_float_quiz_score_stddev", dtype=Float64),
+        Field(name="rv_float_quiz_pass_rate", dtype=Float64),
+        Field(name="rv_float_barback_overview_score", dtype=Float64),
+        Field(name="rv_float_cocktail_tools_score", dtype=Float64),
+        Field(name="rv_float_coffee_drinks_score", dtype=Float64),
+        Field(name="rv_float_dish_prep_score", dtype=Float64),
+        Field(name="rv_float_food_safety_score", dtype=Float64),
+        Field(name="rv_float_glassware_score", dtype=Float64),
+        Field(name="rv_float_housekeeper_score", dtype=Float64),
+        Field(name="rv_float_serving_technique_score", dtype=Float64),
+        Field(name="rv_float_line_cook_quiz_score", dtype=Float64),
+        Field(name="rv_float_quiz_barback_overview_score", dtype=Float64),
+        Field(name="ts_earliest_quiz_attempt", dtype=UnixTimestamp),
+        Field(name="ts_latest_quiz_attempt", dtype=UnixTimestamp),
+        Field(name="rv_int_num_days_from_earliest_attempt", dtype=Int64),
+        Field(name="rv_int_num_days_from_latest_attempt", dtype=Int64),
+        Field(name="rv_int_days_since_first_quiz", dtype=Int64),
+        Field(name="rv_int_days_since_last_quiz", dtype=Int64),
+        Field(name="b_has_taken_quiz", dtype=Int32),
+        Field(name="b_has_passed_quiz", dtype=Int32),
+        Field(name="b_high_quiz_performer", dtype=Int32),
+        Field(name="b_consistent_quiz_performer", dtype=Int32),
+        Field(name="b_recent_quiz_activity", dtype=Int32),
+    ],
+    source=pro_quiz_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_quiz_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Referral Features
+pro_referral_features_source = RedshiftSource(
+    name="pro_referral_features_source",
+    table="dbt-cchia.pro_referral_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_referral_features_fv = FeatureView(
+    name="pro_referral_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_num_references", dtype=Int64),
+        Field(name="rv_float_avg_reference_completeness", dtype=Float64),
+        Field(name="rv_int_num_complete_references", dtype=Int64),
+        Field(name="rv_int_num_high_quality_references", dtype=Int64),
+        Field(name="rv_int_num_references_with_email", dtype=Int64),
+        Field(name="rv_int_num_references_with_phone", dtype=Int64),
+        Field(name="ts_earliest_reference_date", dtype=UnixTimestamp),
+        Field(name="ts_latest_reference_date", dtype=UnixTimestamp),
+        Field(name="rv_int_days_since_first_reference", dtype=Int64),
+        Field(name="rv_int_days_since_last_reference", dtype=Int64),
+        Field(name="rv_int_references_added_l30d", dtype=Int64),
+        Field(name="rv_int_references_added_l90d", dtype=Int64),
+        Field(name="b_has_references", dtype=Int32),
+        Field(name="b_has_strong_reference_network", dtype=Int32),
+        Field(name="b_has_high_quality_references", dtype=Int32),
+        Field(name="b_recent_reference_activity", dtype=Int32),
+        Field(name="b_is_reference_signup", dtype=Int32),
+        Field(name="mc_str_acquisition_type", dtype=String),
+        Field(name="rv_float_referrer_quality_score", dtype=Float64),
+        Field(name="rv_float_referrer_avg_rating", dtype=Float64),
+        Field(name="rv_int_referrer_n_filled_shifts", dtype=Int64),
+        Field(name="rv_int_referrers_time_tenure_days", dtype=Int64),
+        Field(name="rv_int_referrer_referrees_n_filled_shifts", dtype=Int64),
+        Field(name="rv_float_referrer_referrees_avg_rating", dtype=Float64),
+        Field(name="rv_int_referrer_referrees_n_pos_rated_shifts", dtype=Int64),
+        Field(name="rv_int_referrer_referrees_n_neg_rated_shifts", dtype=Int64),
+        Field(name="rv_float_referrer_avg_rating_duplicate", dtype=Float64),
+        Field(name="rv_float_referrer_referrees_avg_rating_duplicate", dtype=Float64),
+        Field(name="rv_float_reference_completeness_rate", dtype=Float64),
+        Field(name="rv_float_high_quality_reference_rate", dtype=Float64),
+        Field(name="rv_float_overall_referral_network_score", dtype=Float64),
+    ],
+    source=pro_referral_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_referral_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Resume Features
+pro_resume_features_source = RedshiftSource(
+    name="pro_resume_features_source",
+    table="dbt-cchia.pro_resume_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_resume_features_fv = FeatureView(
+    name="pro_resume_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_resume_text_len", dtype=Int32),
+        Field(name="rv_float_resume_professionalism_ai_rating", dtype=Float64),
+        Field(name="mc_str_rating_type", dtype=String),
+        Field(name="b_has_resume_text", dtype=Int32),
+        Field(name="b_has_substantial_resume", dtype=Int32),
+        Field(name="b_has_detailed_resume", dtype=Int32),
+        Field(name="ts_resume_created_at", dtype=UnixTimestamp),
+        Field(name="ts_resume_updated_at", dtype=UnixTimestamp),
+        Field(name="ts_ai_evaluation_created_at", dtype=UnixTimestamp),
+        Field(name="rv_int_days_since_resume_created", dtype=Int64),
+        Field(name="rv_int_days_since_resume_updated", dtype=Int64),
+        Field(name="rv_int_days_since_ai_evaluation", dtype=Int64),
+        Field(name="b_resume_updated_recently", dtype=Int32),
+        Field(name="b_resume_updated_l90d", dtype=Int32),
+        Field(name="b_ai_evaluation_recent", dtype=Int32),
+    ],
+    source=pro_resume_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_resume_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Shift Features
+pro_shift_features_source = RedshiftSource(
+    name="pro_shift_features_source",
+    table="dbt-cchia.pro_shift_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_shift_features_fv = FeatureView(
+    name="pro_shift_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="id_shift_id", dtype=Int32),
+        Field(name="id_shift_group_id", dtype=Int32),
+        Field(name="id_business_id", dtype=Int32),
+        Field(name="id_position_id", dtype=Int32),
+        Field(name="id_company_id", dtype=Int32),
+        Field(name="b_is_filled", dtype=Int32),
+        Field(name="b_is_cancelled", dtype=Int32),
+        Field(name="ts_shift_group_starts_at", dtype=UnixTimestamp),
+        Field(name="ts_shift_group_ends_at", dtype=UnixTimestamp),
+        Field(name="rv_int_shift_duration_hours", dtype=Int64),
+        Field(name="rv_float_rating_by_business", dtype=Int32),
+        Field(name="rv_float_rating_by_worker", dtype=Int32),
+        Field(name="b_has_business_rating", dtype=Int32),
+        Field(name="b_has_worker_rating", dtype=Int32),
+        Field(name="rv_float_business_rate_usd", dtype=Float64),
+        Field(name="rv_float_worker_rate_usd", dtype=Float64),
+        Field(name="rv_int_day_of_week", dtype=Int32),
+        Field(name="rv_int_hour_of_day", dtype=Int32),
+        Field(name="b_is_weekend", dtype=Int32),
+        Field(name="b_is_daytime", dtype=Int32),
+        Field(name="b_has_shift_group", dtype=Int32),
+        Field(name="b_has_excellent_business_rating", dtype=Int32),
+        Field(name="b_has_excellent_worker_rating", dtype=Int32),
+        Field(name="b_has_good_business_rating", dtype=Int32),
+        Field(name="b_has_good_worker_rating", dtype=Int32),
+        Field(name="b_is_morning_shift", dtype=Int32),
+        Field(name="b_is_afternoon_shift", dtype=Int32),
+        Field(name="b_is_evening_night_shift", dtype=Int32),
+        Field(name="b_is_short_shift", dtype=Int32),
+        Field(name="b_is_regular_shift", dtype=Int32),
+        Field(name="b_is_long_shift", dtype=Int32),
+        Field(name="b_is_shift_lead", dtype=Int32),
+        Field(name="rv_int_days_between_shift_and_worker_assigned", dtype=Int64),
+        Field(name="rv_float_booking_applicant_rate_usd", dtype=Float64),
+        Field(name="rv_float_current_applicant_rate_usd", dtype=Float64),
+        Field(name="rv_float_pro_booking_rate_shift_earning", dtype=Float64),
+        Field(name="rv_float_pro_current_rate_shift_earning", dtype=Float64),
+        Field(name="b_is_background_check_required", dtype=Int32),
+        Field(name="b_is_break_paid", dtype=Int32),
+        Field(name="b_is_free_food_provided", dtype=Int32),
+        Field(name="b_is_long_term_shift", dtype=Int32),
+        Field(name="b_is_w2_required", dtype=Int32),
+        Field(name="b_is_parking_available", dtype=Int32),
+        Field(name="mc_str_local_day_of_week", dtype=Int32),
+        Field(name="mc_str_local_start_hour", dtype=Int32),
+        Field(name="ts_local_starts_at", dtype=UnixTimestamp),
+        Field(name="id_original_shift_group_id", dtype=Int32),
+        Field(name="rv_int_break_length", dtype=Int32),
+        Field(name="ts_event_created_at", dtype=UnixTimestamp),
+        Field(name="ts_event_recorded_at", dtype=UnixTimestamp),
+        Field(name="mc_str_event", dtype=Int32),
+        Field(name="rv_float_original_shift_duration_hours", dtype=Float64),
+        Field(name="rv_float_original_total_shift_amount", dtype=Float64),
+        Field(name="rv_float_shift_booking_fee", dtype=Float64),
+    ],
+    source=pro_shift_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_shift_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Shift Outcome Features
+pro_shift_outcome_features_source = RedshiftSource(
+    name="pro_shift_outcome_features_source",
+    table="dbt-cchia.pro_shift_outcome_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_shift_outcome_features_fv = FeatureView(
+    name="pro_shift_outcome_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_n_filled_shifts", dtype=Int64),
+        Field(name="rv_int_n_non_urgent_defect", dtype=Int64),
+        Field(name="rv_int_n_urgent_defect_auto_cancel", dtype=Int64),
+        Field(name="rv_int_n_urgent_defect", dtype=Int64),
+        Field(name="rv_int_n_business_cancelled", dtype=Int64),
+        Field(name="rv_int_n_other_urgent_defect", dtype=Int64),
+        Field(name="rv_int_n_assigned_shifts", dtype=Int64),
+        Field(name="rv_int_n_filled_barback", dtype=Int64),
+        Field(name="rv_int_n_filled_bartender", dtype=Int64),
+        Field(name="rv_int_n_filled_brand_ambassador", dtype=Int64),
+        Field(name="rv_int_n_filled_busser", dtype=Int64),
+        Field(name="rv_int_n_filled_concession__stand_worker", dtype=Int64),
+        Field(name="rv_int_n_filled_counter_staff__cashier", dtype=Int64),
+        Field(name="rv_int_n_filled_custodial", dtype=Int64),
+        Field(name="rv_int_n_filled_dishwasher", dtype=Int64),
+        Field(name="rv_int_n_filled_event_server", dtype=Int64),
+        Field(name="rv_int_n_filled_event_setup_and_takedown", dtype=Int64),
+        Field(name="rv_int_n_filled_food_service_worker", dtype=Int64),
+        Field(name="rv_int_n_filled_forklift_driver", dtype=Int64),
+        Field(name="rv_int_n_filled_general_labor", dtype=Int64),
+        Field(name="rv_int_n_filled_housekeeper", dtype=Int64),
+        Field(name="rv_int_n_filled_housekeeping_assistant", dtype=Int64),
+        Field(name="rv_int_n_filled_line_cook", dtype=Int64),
+        Field(name="rv_int_n_filled_merchandiser", dtype=Int64),
+        Field(name="rv_int_n_filled_onsite_captain", dtype=Int64),
+        Field(name="rv_int_n_filled_prep_cook", dtype=Int64),
+        Field(name="rv_int_n_filled_runner", dtype=Int64),
+        Field(name="rv_int_n_filled_supervisor", dtype=Int64),
+        Field(name="rv_int_n_filled_vip_event_server", dtype=Int64),
+        Field(name="rv_int_n_filled_warehouse_admin", dtype=Int64),
+        Field(name="rv_int_n_filled_warehouse_associate_entry_level", dtype=Int64),
+        Field(name="rv_int_n_filled_warehouse_associate_intermediate", dtype=Int64),
+    ],
+    source=pro_shift_outcome_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_shift_outcome_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Skill Vector Features
+pro_skill_vector_features_source = RedshiftSource(
+    name="pro_skill_vector_features_source",
+    table="dbt-cchia.pro_skill_vector_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_skill_vector_features_fv = FeatureView(
+    name="pro_skill_vector_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="mt_level_vector_str", dtype=String),
+        Field(name="mt_confidence_level_vector_str", dtype=String),
+        Field(name="mt_source_vector_str", dtype=String),
+    ],
+    source=pro_skill_vector_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_skill_vector_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Ticket Features
+pro_ticket_features_source = RedshiftSource(
+    name="pro_ticket_features_source",
+    table="dbt-cchia.pro_ticket_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_ticket_features_fv = FeatureView(
+    name="pro_ticket_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="rv_int_n_pro_tickets", dtype=Int64),
+    ],
+    source=pro_ticket_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_ticket_features_inference",
+        "entity": "worker",
+    },
+)
+
+# Pro Time Features
+pro_time_features_source = RedshiftSource(
+    name="pro_time_features_source",
+    table="dbt-cchia.pro_time_features_inference",
+    timestamp_field="ts_ds",
+)
+
+pro_time_features_fv = FeatureView(
+    name="pro_time_features",
+    entities=[worker_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="id_business_id", dtype=Int32),
+        Field(name="mc_str_business_region", dtype=Int32),
+        Field(name="rv_int_future_worker_assignments", dtype=Int64),
+        Field(name="rv_int_future_worker_unassignments", dtype=Int64),
+        Field(name="rv_int_future_business_cancellations", dtype=Int64),
+        Field(name="rv_int_future_auto_cancellations", dtype=Int64),
+        Field(name="rv_int_future_worker_cancellations", dtype=Int64),
+        Field(name="rv_int_future_excuse_cancellations", dtype=Int64),
+        Field(name="rv_int_future_shift_leads", dtype=Int64),
+        Field(name="rv_int_future_running_assigneds_with_business", dtype=Int64),
+        Field(name="rv_int_future_running_unassigneds_with_business", dtype=Int64),
+        Field(name="rv_int_historical_running_worker_assigneds", dtype=Int64),
+        Field(name="rv_int_historical_running_worker_unassigneds", dtype=Int64),
+        Field(name="rv_int_historical_running_business_cancels", dtype=Int64),
+        Field(name="rv_int_historical_running_no_shows", dtype=Int64),
+        Field(name="rv_int_historical_running_no_shows_corrected", dtype=Int64),
+        Field(name="rv_int_historical_running_auto_cancels", dtype=Int64),
+        Field(name="rv_int_historical_running_worker_cancels", dtype=Int64),
+        Field(name="rv_int_historical_running_excuse_cancels", dtype=Int64),
+        Field(name="rv_int_historical_running_minor_tardies", dtype=Int64),
+        Field(name="rv_int_historical_running_major_tardies", dtype=Int64),
+        Field(name="rv_int_historical_running_shift_leads", dtype=Int64),
+        Field(name="rv_int_historical_running_assigneds_with_business", dtype=Int64),
+        Field(name="rv_int_historical_running_unassigneds_with_business", dtype=Int64),
+        Field(name="rv_float_historical_assignment_reliability", dtype=Float64),
+        Field(name="rv_float_historical_no_show_rate", dtype=Float64),
+        Field(name="rv_float_historical_cancellation_rate", dtype=Float64),
+        Field(name="rv_float_historical_tardiness_rate", dtype=Float64),
+    ],
+    source=pro_time_features_source,
+    tags={
+        "source": "redshift",
+        "table": "pro_time_features_inference",
+        "entity": "worker",
+    },
+)
+
+# ============================================================================
+# SHIFT FEATURE VIEWS
+# ============================================================================
+
+# Shift Benefits Features
+shift_benefits_features_source = RedshiftSource(
+    name="shift_benefits_features_source",
+    table="dbt-cchia.shift_benefits_features_inference",
+    timestamp_field="ts_ds",
+)
+
+shift_benefits_features_fv = FeatureView(
+    name="shift_benefits_features",
+    entities=[shift_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="id_business_id", dtype=Int32),
+        Field(name="id_company_id", dtype=Int32),
+        Field(name="b_has_free_meals", dtype=Int32),
+        Field(name="b_has_parking", dtype=Int32),
+        Field(name="b_is_flexible_time_task", dtype=Int32),
+    ],
+    source=shift_benefits_features_source,
+    tags={
+        "source": "redshift",
+        "table": "shift_benefits_features_inference",
+        "entity": "shift",
+    },
+)
+
+# Shift Core Features
+shift_core_features_source = RedshiftSource(
+    name="shift_core_features_source",
+    table="dbt-cchia.shift_core_features_inference",
+    timestamp_field="ts_ds",
+)
+
+shift_core_features_fv = FeatureView(
+    name="shift_core_features",
+    entities=[shift_entity],
+    ttl=timedelta(days=365),
+    schema=[
+        Field(name="id_shift_group_id", dtype=Int32),
+        Field(name="id_worker_id", dtype=Int32),
+        Field(name="id_business_id", dtype=Int32),
+        Field(name="id_company_id", dtype=Int32),
+        Field(name="id_position_id", dtype=Int32),
+        Field(name="id_regionmapping_id", dtype=Int32),
+        Field(name="ts_shift_created_at", dtype=UnixTimestamp),
+        Field(name="ts_shift_starts_at", dtype=UnixTimestamp),
+        Field(name="ts_shift_ends_at", dtype=UnixTimestamp),
+        Field(name="ts_shift_group_created_at", dtype=UnixTimestamp),
         Field(name="b_w2_employees_only", dtype=Int32),
         Field(name="b_is_filled", dtype=Int32),
         Field(name="b_worker_no_show", dtype=Int32),
+        Field(name="rv_float_rating_by_worker", dtype=Int32),
+        Field(name="rv_float_rating_by_business", dtype=Int32),
         Field(name="b_has_rating_by_worker", dtype=Int32),
         Field(name="b_has_rating_by_business", dtype=Int32),
-        Field(name="b_is_weekend", dtype=Int32),
-        Field(name="b_is_daytime", dtype=Int32),
-        Field(name="b_is_bad_quality_outcome", dtype=Int32),
-        Field(name="b_b_is_partial", dtype=Int32),
-        # Ratings
-        Field(name="rv_float_rating_by_worker", dtype=Float64),
-        Field(name="rv_float_rating_by_business", dtype=Float64),
-        # Rates
         Field(name="rv_float_business_rate_usd", dtype=Float64),
         Field(name="rv_float_applicant_rate_usd", dtype=Float64),
-        # Timing metrics
         Field(name="rv_int_created_to_start_hours", dtype=Int64),
         Field(name="rv_int_group_created_to_start_hours", dtype=Int64),
         Field(name="rv_int_shift_duration_hours", dtype=Int64),
         Field(name="rv_int_day_of_week", dtype=Int32),
         Field(name="rv_int_hour_of_day", dtype=Int32),
-        # Sequence metrics
+        Field(name="b_is_weekend", dtype=Int32),
+        Field(name="b_is_daytime", dtype=Int32),
         Field(name="rv_int_user_shift_sequence", dtype=Int64),
         Field(name="rv_int_user_business_shift_sequence", dtype=Int64),
         Field(name="rv_int_user_position_shift_sequence", dtype=Int64),
-        Field(name="rv_int_hours_since_previous_shift", dtype=Float64),
-        Field(name="rv_int_hours_to_next_shift", dtype=Float64),
-        # Categorical
+        Field(name="rv_int_hours_since_previous_shift", dtype=Int64),
+        Field(name="rv_int_hours_to_next_shift", dtype=Int64),
+        Field(name="b_is_bad_quality_outcome", dtype=Int32),
         Field(name="mc_str_shift_style", dtype=String),
+        Field(name="b_b_is_partial", dtype=Int32),
     ],
-    online=False,
     source=shift_core_features_source,
-    tags={"owner": "data_team", "domain": "shift", "category": "core"},
+    tags={
+        "source": "redshift",
+        "table": "shift_core_features_inference",
+        "entity": "shift",
+    },
 )
+
+# ============================================================================
+# ALL FEATURE VIEWS AND ENTITIES
+# ============================================================================
+
+all_feature_views = [
+    business_features_fv,
+    business_hypertrack_features_fv,
+    business_no_show_features_fv,
+    pro_amplitude_features_fv,
+    pro_attire_features_fv,
+    pro_business_features_fv,
+    pro_company_features_fv,
+    pro_core_features_fv,
+    pro_education_features_fv,
+    pro_experience_features_fv,
+    pro_hypertrack_features_fv,
+    pro_position_rating_features_fv,
+    pro_quality_ratings_features_fv,
+    pro_quiz_features_fv,
+    pro_referral_features_fv,
+    pro_resume_features_fv,
+    pro_shift_features_fv,
+    pro_shift_outcome_features_fv,
+    pro_skill_vector_features_fv,
+    pro_ticket_features_fv,
+    pro_time_features_fv,
+    shift_benefits_features_fv,
+    shift_core_features_fv,
+]
+
+all_entities = [
+    business_entity,
+    shift_entity,
+    worker_entity,
+]
+
+# Feature view count by entity
+feature_view_counts = {
+    "business": 4,
+    "shift": 4,
+    "worker": 0,
+}
