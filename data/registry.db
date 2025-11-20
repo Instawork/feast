@@ -1,0 +1,183 @@
+
+q
+Q
+id_shift_idInstawork Shift identifier"id_shift_idJinstawork_feature_store
+îÉıÈà®›’îÉıÈà®›’
+z
+Z
+id_business_idInstawork Business identifier"id_business_idJinstawork_feature_store
+îÉıÈ€Å’îÉıÈ€Å’
+z
+Z
+id_worker_id!Instawork Professional identifier"id_worker_idJinstawork_feature_store
+îÉıÈà–£’îÉıÈà–£’
+N
+.
+__dummy"
+__dummy_idJinstawork_feature_store
+îÉıÈÀı ’îÉıÈĞ¿¥’1"$6d333c5f-6635-4c47-825a-fb900fbc9937*¼ÊıÈÈÁ—£2ˆ
+
+ç	
+shift_core_featuresinstawork_feature_storeid_shift_id"
+id_shift_group_id"
+id_worker_id"
+id_business_id"
+id_company_id"
+id_position_id"
+id_regionmapping_id"
+ts_shift_created_at"
+ts_shift_starts_at"
+ts_shift_ends_at"
+ts_shift_group_created_at"
+b_w2_employees_only"
+b_is_filled"
+b_worker_no_show"
+b_has_rating_by_worker"
+b_has_rating_by_business"
+b_is_weekend"
+b_is_daytime"
+b_is_bad_quality_outcome"
+b_b_is_partial"
+rv_float_rating_by_worker"
+rv_float_rating_by_business"
+rv_float_business_rate_usd"
+rv_float_applicant_rate_usd"!
+rv_int_created_to_start_hours"'
+#rv_int_group_created_to_start_hours"
+rv_int_shift_duration_hours"
+rv_int_day_of_week"
+rv_int_hour_of_day"
+rv_int_user_shift_sequence"'
+#rv_int_user_business_shift_sequence"'
+#rv_int_user_position_shift_sequence"%
+!rv_int_hours_since_previous_shift"
+rv_int_hours_to_next_shift"
+mc_str_shift_style*
+owner	data_team*
+categorycore*
+domainshift2€ÎÚ:¸ts_dsz5
+shift_core_features_inference	dbt-cchia"	instaworkŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_core_features_source’éÉıÈ¸Á½á"îÉıÈøç²‘b
+id_shift_id
+îÉıÈ°´Ë‘îÉıÈ°´Ë‘2
+×
+pro_education_featuresinstawork_feature_storeid_worker_id"
+b_has_degree_associates"
+b_has_degree_bachelors"
+b_has_degree_masters"
+b_has_degree_phd" 
+b_has_degree_culinary_school"#
+b_has_degree_hospitality_school"
+b_has_degree_hotel_school"
+b_has_degree_high_school"
+b_has_degree_some_college")
+%b_has_offshift_degree_culinary_school",
+(b_has_offshift_degree_hospitality_school"&
+"b_has_offshift_degree_hotel_school"&
+"b_has_offshift_degree_some_college"
+rv_int_education_level""
+rv_int_total_education_entries""
+rv_int_unique_schools_attended" 
+rv_int_unique_degrees_earned")
+%rv_float_avg_education_duration_years"(
+$rv_int_earliest_education_start_year"$
+ rv_int_latest_education_end_year"%
+!rv_int_years_since_last_education"
+b_has_completed_degree"%
+!b_has_relevant_industry_education"
+b_has_higher_education"#
+mc_str_education_level_category*
+owner	data_team*
+category	education*
+domainpro_profile2€ç„:×ts_dszÙÖ
+        SELECT *
+        FROM "dbt-cchia"."pro_education_features_inference"
+        WHERE id_worker_id IN (
+            SELECT DISTINCT id_worker_id
+            FROM "dbt-cchia"."pro_education_features_inference"
+            LIMIT 10
+        )
+        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."pro_education_features_inference")
+    Š9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_source’éÉıÈÀ™„á"îÉıÈ¨Ã¹‘@b
+id_worker_id3
+îÉıÈÀñ‘¸ÊıÈˆ‘÷¹
+²ãø¹À¹‡°ÊıÈ2¿
+†
+business_featuresinstawork_feature_storeid_business_id"
+id_company_id"
+mc_int_business_region"
+mc_str_business_region_name"
+mc_str_business_name" 
+mc_str_business_display_name"
+mc_str_business_type"
+mc_str_business_timezone"
+rv_int_total_shifts"
+rv_int_total_filled_shifts"!
+rv_int_total_completed_shifts"
+rv_float_fill_rate"
+rv_int_shifts_l90d"
+rv_int_daily_shifts""
+rv_int_cancelled_filled_shifts"!
+rv_int_total_cancelled_shifts"
+rv_int_n_booked_shifts"
+rv_int_n_completed_shifts"*
+&rv_float_avg_business_rating_by_worker"*
+&rv_float_avg_worker_rating_by_business"#
+rv_int_total_ratings_by_workers"$
+ rv_int_total_ratings_by_business"
+mc_str_partner_status"
+mc_str_partner_period"
+mc_str_partner_type"
+mc_str_primary_industry"
+mc_str_secondary_industry"
+rv_int_unique_workers"
+rv_int_total_unique_workers"
+rv_int_w2_employees_only"
+rv_int_active_pros"
+rv_int_deactivated_pros"
+rv_int_inferred_active_pros"
+rv_int_rejected_pros"
+rv_int_removed_pros"
+ts_first_shift_date"
+ts_last_shift_date"!
+rv_int_days_since_first_shift" 
+rv_int_days_since_last_shift"
+rv_int_days_since_last_ud"
+ts_gig_date"+
+'rv_float_avg_filled_shift_business_rate"-
+)rv_float_avg_unfilled_shift_business_rate",
+(rv_float_avg_filled_shift_applicant_rate".
+*rv_float_avg_unfilled_shift_applicant_rate"
+rv_int_num_gigs"
+rv_int_num_gigs_posted"
+rv_int_num_gigs_filled"
+rv_float_gig_fill_rate"
+rv_int_unique_companies"
+rv_int_unique_shift_days",
+(rv_int_business_cumulative_filled_shifts*
+owner	data_team*
+domainbusiness_profile2€ç„:Ìts_dszÎË
+        SELECT *
+        FROM "dbt-cchia"."business_features_inference"
+        WHERE id_business_id IN (
+            SELECT DISTINCT id_business_id
+            FROM "dbt-cchia"."business_features_inference"
+            LIMIT 10
+        )
+        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."business_features_inference")
+    Š9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_source’éÉıÈÀ™„á"îÉıÈğá§‘@b
+id_business_id4
+îÉıÈÈò‡’¼ÊıÈ¨Ø…£
+¸ãø¹¨¸º°ÊıÈbÒts_dsz5
+shift_core_features_inference	dbt-cchia"	instaworkŠ9feast.infra.offline_stores.redshift_source.RedshiftSource¢shift_core_features_sourceªinstawork_feature_store’éÉıÈ¸Á½á"îÉıÈøç²‘bñts_dszÙÖ
+        SELECT *
+        FROM "dbt-cchia"."pro_education_features_inference"
+        WHERE id_worker_id IN (
+            SELECT DISTINCT id_worker_id
+            FROM "dbt-cchia"."pro_education_features_inference"
+            LIMIT 10
+        )
+        AND ts_ds = (SELECT MAX(ts_ds) FROM "dbt-cchia"."pro_education_features_inference")
+    Š9feast.infra.offline_stores.redshift_source.RedshiftSource¢pro_education_sourceªinstawork_feature_store’éÉıÈÀ™„á"îÉıÈ¨Ã¹‘Š9
+
+instawork_feature_store
+éÉıÈ ŒûáéÉıÈ Œûá

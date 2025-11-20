@@ -1,0 +1,7 @@
+pandas
+pandas-stubs
+pyarrow
+feast
+streamlit
+
+
