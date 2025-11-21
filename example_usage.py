@@ -5,7 +5,6 @@ This shows how to use the generated feature definitions.
 """
 
 from feast import FeatureStore
-from all_features import all_feature_views, all_entities
 from datetime import datetime, timedelta
 
 # Initialize feature store
